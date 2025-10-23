@@ -1,6 +1,5 @@
 ---
-const shopifyPublicKey = import.meta.env
-  .PUBLIC_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+const shopifyPublicKey = import.meta.env.PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 const shopifyStoreDomain = import.meta.env.PUBLIC_SHOPIFY_STORE_DOMAIN;
 const shopifyStoreCountry = import.meta.env.PUBLIC_SHOPIFY_STORE_COUNTRY;
 const shopifyStoreLang = import.meta.env.PUBLIC_SHOPIFY_STORE_LANGUAGE;
@@ -12,5 +11,4 @@ const shopifyStoreLang = import.meta.env.PUBLIC_SHOPIFY_STORE_LANGUAGE;
   country=`${shopifyStoreCountry}`
   language=`${shopifyStoreLang}`
 >
-  <slot />
 </shopify-store>

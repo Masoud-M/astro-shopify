@@ -1,0 +1,63 @@
+<button
+  class="cs-button-solid"
+  onclick="document.getElementById('cart').showModal();"
+  ><div class="navigation__view-cart">
+    <shopify-context type="cart"
+      ><template
+        ><shopify-data
+          query="cart.totalQuantity"
+          class="navigation__view-cart__quantity"></shopify-data></template
+      ></shopify-context
+    >
+    <span> View Cart </span>
+  </div></button
+>
+
+<style>
+  .cs-button-solid {
+    margin-top: 1rem;
+    border: none;
+  }
+
+  .navigation__view-cart {
+    position: relative;
+  }
+  .navigation__view-cart__quantity {
+    color: #000;
+    font-size: 12px;
+    background-color: #fff;
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    width: 16px;
+    height: 16px;
+    border-radius: 1000px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+  }
+  .navigation__view-cart__quantity:empty {
+    display: none;
+  }
+  .navigation__view-cart span {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.875rem;
+    gap: 0.5rem;
+    justify-content: center;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .navigation__view-cart span::after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-image: url("/assets/svgs/cart.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 15px;
+  }
+</style>

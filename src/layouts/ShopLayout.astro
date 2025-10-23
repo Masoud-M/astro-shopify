@@ -7,6 +7,7 @@ import Footer from "@components/Footer.astro";
 import ShopifyStoreProvider from "@components/ShopifyStoreProvider.astro";
 import "@styles/root.less";
 import "@styles/dark.less";
+import ShopifyCart from "@components/ShopifyCart.astro";
 
 // Define a type for images from the content collection
 type ContentImage = {
@@ -90,15 +91,15 @@ const { description, title, preloadedImage } = Astro.props as Props;
         </head>
 
         <body>
-            <!-- Screen reader skip main nav -->
-            <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
-            <ShopifyStoreProvider>
+                <!-- Screen reader skip main nav -->
+                <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
+                <ShopifyStoreProvider />
+                <ShopifyCart />
                 <Header />
                 <main id="main">
                     <slot/>
                 </main>
                 <Footer />
-            </ShopifyStoreProvider>
         </body>
 </html>
 
