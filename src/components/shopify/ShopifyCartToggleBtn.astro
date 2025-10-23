@@ -1,4 +1,4 @@
-<button
+<!-- <button
   class="cs-button-solid"
   onclick="document.getElementById('cart').showModal();"
   ><div class="navigation__view-cart">
@@ -11,7 +11,42 @@
     >
     <span> View Cart </span>
   </div></button
+> -->
+<button
+  class="cs-button-solid"
+  onclick="document.getElementById('cart').showModal();"
 >
+  <div class="navigation__view-cart" id="viewCartContainer">
+    <span>View Cart</span>
+  </div>
+</button>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("viewCartContainer");
+
+    function renderCartQuantity() {
+      container.insertAdjacentHTML(
+        "afterbegin",
+        `
+          <shopify-context type="cart">
+            <template>
+              <shopify-data query="cart.totalQuantity"
+                class="navigation__view-cart__quantity">
+              </shopify-data>
+            </template>
+          </shopify-context>
+        `
+      );
+    }
+
+    if (customElements.get("shopify-context")) {
+      renderCartQuantity();
+    } else {
+      customElements.whenDefined("shopify-context").then(renderCartQuantity);
+    }
+  });
+</script>
 
 <style>
   .cs-button-solid {
