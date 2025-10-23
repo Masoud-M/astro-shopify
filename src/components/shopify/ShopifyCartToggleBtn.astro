@@ -1,18 +1,11 @@
-<!-- <button
+<button
   class="cs-button-solid"
   onclick="document.getElementById('cart').showModal();"
   ><div class="navigation__view-cart">
-    <shopify-context type="cart"
-      ><template
-        ><shopify-data
-          query="cart.totalQuantity"
-          class="navigation__view-cart__quantity"></shopify-data></template
-      ></shopify-context
-    >
     <span> View Cart </span>
   </div></button
-> -->
-<button
+>
+<!-- <button
   class="cs-button-solid"
   onclick="document.getElementById('cart').showModal();"
 >
@@ -26,18 +19,19 @@
     const container = document.getElementById("viewCartContainer");
 
     function renderCartQuantity() {
-      container.insertAdjacentHTML(
-        "afterbegin",
-        `
-          <shopify-context type="cart">
-            <template>
-              <shopify-data query="cart.totalQuantity"
-                class="navigation__view-cart__quantity">
-              </shopify-data>
-            </template>
-          </shopify-context>
-        `
-      );
+      if (!container) return;
+
+      // Replace the entire content
+      container.innerHTML = `
+        <shopify-context type="cart"
+      ><template
+        ><shopify-data
+          query="cart.totalQuantity"
+          class="navigation__view-cart__quantity"></shopify-data></template
+      ></shopify-context
+    >
+    <span> View Cart </span>
+      `;
     }
 
     if (customElements.get("shopify-context")) {
@@ -46,7 +40,7 @@
       customElements.whenDefined("shopify-context").then(renderCartQuantity);
     }
   });
-</script>
+</script> -->
 
 <style>
   .cs-button-solid {
