@@ -6,6 +6,8 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import "@styles/root.less";
 import "@styles/dark.less";
+import ShopifyStoreProvider from "@components/shopify/ShopifyStoreProvider.astro";
+import ShopifyCart from "@components/shopify/ShopifyCart.astro";
 
 // Define a type for images from the content collection
 type ContentImage = {
@@ -85,6 +87,7 @@ const { description, title, preloadedImage } = Astro.props as Props;
 
             <!-- Sitewide Scripts -->
             <script src="@js/nav.js"></script>
+            <script src="https://cdn.shopify.com/storefront/web-components.js"></script>
         </head>
 
 
@@ -92,6 +95,8 @@ const { description, title, preloadedImage } = Astro.props as Props;
             <!-- Screen reader skip main nav -->
             <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
             <Header />
+            <ShopifyStoreProvider />
+            <ShopifyCart />
             <main id="main">
                 <slot/>
             </main>

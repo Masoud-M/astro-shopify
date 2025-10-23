@@ -1,0 +1,16 @@
+---
+import {
+  PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+  PUBLIC_SHOPIFY_STORE_COUNTRY,
+  PUBLIC_SHOPIFY_STORE_DOMAIN,
+  PUBLIC_SHOPIFY_STORE_LANGUAGE,
+} from "@data/shopify.ts";
+---
+
+<shopify-store
+  store-domain=`${PUBLIC_SHOPIFY_STORE_DOMAIN}`
+  public-access-token=`${PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN}`
+  country=`${PUBLIC_SHOPIFY_STORE_COUNTRY}`
+  language=`${PUBLIC_SHOPIFY_STORE_LANGUAGE}`
+>
+</shopify-store>
