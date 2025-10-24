@@ -93,18 +93,20 @@ const { description, title, preloadedImage } = Astro.props as Props;
             
         </head>
 
-
-        <body>
-            <!-- Screen reader skip main nav -->
-            <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
-            <Header />
-            <ShopifyStoreProvider />
-            <ShopifyCart />
-            <main id="main">
-                <slot/>
-            </main>
-            <Footer />
-        </body>
+        
+  <body>
+    <ShopifyStoreProvider>
+      <!-- Screen reader skip main nav -->
+      <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
+      <Header />
+      
+      <ShopifyCart />
+      <main id="main">
+        <slot/>
+      </main>
+      <Footer />
+    </ShopifyStoreProvider>
+  </body>
 </html>
 
 <script is:inline>
