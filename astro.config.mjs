@@ -2,9 +2,14 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
+import netlify from "@astrojs/netlify";
+
 export default defineConfig({
   output: 'static',
-  site: "https://www.yourwebsite.com", // update me!
+
+  // update me!
+  site: "https://www.yourwebsite.com",
+
   integrations: [
     icon(),
     sitemap({
@@ -13,4 +18,6 @@ export default defineConfig({
       priority: 0.7,
     }),
   ],
+
+  adapter: netlify(),
 });
