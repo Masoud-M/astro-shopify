@@ -19,6 +19,7 @@ import ShopifyCartToggleBtn from "@components/shopify/ShopifyCartToggleBtn.astro
         decoding="async"
       />
     </a>
+
     <!--Navigation List-->
     <nav class="cs-nav" role="navigation">
       <!--Mobile Nav Toggle-->
@@ -101,7 +102,9 @@ import ShopifyCartToggleBtn from "@components/shopify/ShopifyCartToggleBtn.astro
         </ul>
       </div>
     </nav>
-    <ShopifyCartToggleBtn client:load />
+
+    <ShopifyCartToggleBtn />
+
     <!--Dark Mode toggle: remove component if you don't want to enable a dark mode toggle-->
     <DarkModeToggle />
   </div>
