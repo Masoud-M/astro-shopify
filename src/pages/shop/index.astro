@@ -8,6 +8,7 @@ import FAQ from "@components/FAQ.astro";
 import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getImage } from "astro:assets";
 import ShopifyAddToCartBtn from "@components/shopify/ShopifyAddToCartBtn.astro";
+import ViewProductBtn from "@components/shopify/ViewProductBtn.astro";
 const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 ---
 
@@ -60,12 +61,9 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
                   </div>
                 </div>
               </a>
-              <ShopifyAddToCartBtn />
-              <!-- Add View to Product Button -->
-              <a href="" class="product__link" target="_blank">
-                <shopify-data class="hidden" query="product.handle"
-                ></shopify-data>
-              </a>
+
+              <!-- <ShopifyAddToCartBtn /> -->
+              <ViewProductBtn />
             </article>
           </template>
         </shopify-list-context>
@@ -78,22 +76,6 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 </BaseLayout>
 
 <script is:inline>
-  function updateLinks() {
-    document.querySelectorAll(".product__link").forEach((link) => {
-      const data = link.querySelector("shopify-data");
-      if (data) {
-        const hrefValue = data.textContent.trim();
-        link.href = hrefValue;
-      }
-    });
-  }
-
-  // Watch for new anchors being added
-  new MutationObserver(updateLinks).observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-
   function updateOffers() {
     document.querySelectorAll(".cs-was-price").forEach((price) => {
       const offer = price.closest(".cs-item")?.querySelector(".cs-offer");

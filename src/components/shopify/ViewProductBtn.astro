@@ -1,0 +1,34 @@
+<!-- It's a bit dirty and hacky but it works. we grab the product handle, then set that span to hidden, and update the parent anchor element href with that product handle. we use his to dynamically creating pages for each product -->
+<a href="" class="product-link cs-button-solid">
+  <span class="product-handle" aria-hidden="true">
+    <shopify-data class="hidden" query="product.handle"></shopify-data>
+  </span>
+  View Product
+</a>
+
+<script is:inline>
+  function updateLinks() {
+    document.querySelectorAll(".product-link").forEach((link) => {
+      link.childNodes[1].setAttribute("style", "display:none;");
+      const data = link.querySelector("shopify-data");
+      if (data) {
+        const hrefValue = data.textContent.trim();
+        link.href = hrefValue;
+      }
+    });
+  }
+
+  // Watch for new anchors being added
+  new MutationObserver(updateLinks).observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+</script>
+
+<style>
+  .cs-button-solid {
+    margin-top: 1rem;
+    border: none;
+    width: 100%;
+  }
+</style>
