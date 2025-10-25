@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import ShopifyProductModal from "@components/shopify/ShopifyProductModal.astro";
 import CTA from "@components/CTA.astro";
 import FAQ from "@components/FAQ.astro";
 
@@ -29,8 +28,9 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
             >
               <a
                 shopify-attr--disabled="!product.availableForSale"
-                onclick="getElementById('product-modal').showModal(); getElementById('product-modal-context').update(event);"
-                class="cs-link"
+                class="cs-link product-link"
+                href=""
+                target="_blank"
               >
                 <div class="cs-picture">
                   <shopify-media
@@ -68,8 +68,6 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
           </template>
         </shopify-list-context>
       </div>
-      <!-- YOU CAN REMOVE PRODUCT MODAL IF YOU WANT TO HAVE THE VIEW PRODUCT BUTTON AND SPECIFIC PAGES FOR EACH PRODUCT -->
-      <ShopifyProductModal />
     </div>
   </section>
   <FAQ />
