@@ -16,6 +16,8 @@ const { productHandle, description, title } = Astro.props;
                 <div class="product-card__main-image">
                   <shopify-media
                     layout="constrained"
+                    width="390"
+                    height="490"
                     query="product.selectedOrFirstAvailableVariant.image"
                   ></shopify-media>
                 </div>
