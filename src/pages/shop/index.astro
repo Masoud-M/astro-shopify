@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import ProductModal from "@components/shopify/ProductModal.astro";
+import ShopifyProductModal from "@components/shopify/ShopifyProductModal.astro";
 import CTA from "@components/CTA.astro";
 import FAQ from "@components/FAQ.astro";
 
@@ -8,7 +8,7 @@ import FAQ from "@components/FAQ.astro";
 import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getImage } from "astro:assets";
 import ShopifyAddToCartBtn from "@components/shopify/ShopifyAddToCartBtn.astro";
-import ViewProductBtn from "@components/shopify/ViewProductBtn.astro";
+import ShopifyViewProductBtn from "@components/shopify/ShopifyViewProductBtn.astro";
 const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 ---
 
@@ -63,13 +63,13 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
               </a>
 
               <!-- <ShopifyAddToCartBtn /> -->
-              <ViewProductBtn />
+              <ShopifyViewProductBtn />
             </article>
           </template>
         </shopify-list-context>
       </div>
       <!-- YOU CAN REMOVE PRODUCT MODAL IF YOU WANT TO HAVE THE VIEW PRODUCT BUTTON AND SPECIFIC PAGES FOR EACH PRODUCT -->
-      <ProductModal />
+      <ShopifyProductModal />
     </div>
   </section>
   <FAQ />
