@@ -1,0 +1,153 @@
+<section class="sorting-section">
+  <!-- Filter Dropdown -->
+  <div class="filter-wrapper">
+    <label for="filterSelect">Sort by:</label>
+    <select id="filterSelect" onchange="handleSort()">
+      <option value="">Select an option</option>
+      <option value="az">Name: A - Z</option>
+      <option value="za">Name: Z - A</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="new">Newest</option>
+      <option value="popular">Most Popular</option>
+    </select>
+  </div>
+
+  <!-- Products per Page Dropdown -->
+  <div class="filter-wrapper">
+    <label for="productCountSelect">Products per page:</label>
+    <select id="productCountSelect" onchange="handleProductCount()">
+      <option value="9">9</option>
+      <option value="18">18</option>
+      <option value="27">27</option>
+      <option value="36">36</option>
+    </select>
+  </div>
+</section>
+
+<script is:inline>
+  function handleSort() {
+    const shopifyList = document.getElementById("list-context");
+    const value = document.getElementById("filterSelect").value;
+
+    if (!shopifyList) {
+      console.warn("⚠️ Element with id 'list-context' not found.");
+      return;
+    }
+
+    switch (value) {
+      case "az":
+        sortAZ(shopifyList);
+        break;
+      case "za":
+        sortZA(shopifyList);
+        break;
+      case "low":
+        sortPriceLow(shopifyList);
+        break;
+      case "high":
+        sortPriceHigh(shopifyList);
+        break;
+      case "new":
+        sortNewest(shopifyList);
+        break;
+      case "popular":
+        sortPopular(shopifyList);
+        break;
+      default:
+        sortNewest(shopifyList);
+        break;
+    }
+  }
+
+  function handleProductCount() {
+    const shopifyList = document.getElementById("list-context");
+    const count = document.getElementById("productCountSelect").value;
+
+    if (!shopifyList) {
+      console.warn("⚠️ Element with id 'list-context' not found.");
+      return;
+    }
+
+    shopifyList.setAttribute("first", count);
+  }
+
+  function sortAZ(list) {
+    list.setAttribute("sort-key", "TITLE");
+    list.removeAttribute("reverse-order");
+  }
+
+  function sortZA(list) {
+    list.setAttribute("sort-key", "TITLE");
+    list.setAttribute("reverse-order", "");
+  }
+
+  function sortPriceLow(list) {
+    list.removeAttribute("reverse-order");
+    list.setAttribute("sort-key", "PRICE");
+  }
+
+  function sortPriceHigh(list) {
+    list.setAttribute("reverse-order", "");
+    list.setAttribute("sort-key", "PRICE");
+  }
+
+  function sortNewest(list) {
+    list.setAttribute("sort-key", "CREATED_AT");
+    list.removeAttribute("reverse-order");
+  }
+
+  function sortPopular(list) {
+    list.setAttribute("sort-key", "BEST_SELLING");
+    list.removeAttribute("reverse-order");
+  }
+</script>
+
+<style>
+  .sorting-section {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-items: center;
+    gap: 2rem;
+    text-align: left;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  .filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  label {
+    font-size: 16px;
+    color: #333;
+  }
+
+  select {
+    padding: 10px 15px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: white;
+    transition: box-shadow 0.2s ease;
+  }
+
+  select:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  body.dark-mode label {
+    color: var(--bodyTextColorWhite);
+  }
+</style>
