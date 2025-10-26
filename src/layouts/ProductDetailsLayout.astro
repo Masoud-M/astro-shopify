@@ -8,7 +8,6 @@ const { productHandle, description, title } = Astro.props;
   <section class="wrapper">
     <div class="product-layout">
       <div class="product-card">
-        <!-- Set product you want to display -->
         <shopify-context type="product" handle={productHandle}>
           <template>
             <div class="product-card__container">

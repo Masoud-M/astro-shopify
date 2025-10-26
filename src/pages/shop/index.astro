@@ -34,8 +34,9 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
                 <div class="cs-picture">
                   <shopify-media
                     max-images="1"
+                    layout="constrained"
                     width="280"
-                    height="280"
+                    height="350"
                     query="product.selectedOrFirstAvailableVariant.image"
                   ></shopify-media>
                   <span class="cs-offer">ON SALE</span>
