@@ -1,0 +1,52 @@
+---
+type VariantSelectorProps = {
+  radioVariant: "pill" | "text";
+  colorSwatchVariant: "circle" | "square";
+};
+
+const { radioVariant, colorSwatchVariant } =
+  Astro.props as VariantSelectorProps;
+---
+
+<shopify-variant-selector
+  data-radio-variant={radioVariant}
+  data-color-swatch-variant={colorSwatchVariant}></shopify-variant-selector>
+
+<style>
+  shopify-variant-selector[data-radio-variant="text"]::part(radio) {
+    font-weight: normal;
+    border: 0;
+    border-radius: 0;
+    background-color: inherit;
+    color: #000;
+    font-size: 16px;
+    border-bottom: 0px solid #000;
+    transition: border-bottom 100ms ease-in-out;
+  }
+
+  shopify-variant-selector[data-radio-variant="text"]::part(radio):hover {
+    border-bottom: 2px solid #000;
+  }
+
+  shopify-variant-selector[data-radio-variant="text"]::part(radio-selected) {
+    color: #000;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+
+  shopify-variant-selector[data-color-swatch-variant="square"]::part(
+      color-swatch
+    ) {
+    border-radius: 4px;
+  }
+  shopify-variant-selector[data-color-swatch-variant="square"]::part(
+      color-swatch
+    ):after {
+    border-radius: 4px;
+  }
+
+  shopify-variant-selector::part(color-swatch-disabled),
+  shopify-variant-selector::part(radio-disabled) {
+    cursor: not-allowed;
+  }
+</style>

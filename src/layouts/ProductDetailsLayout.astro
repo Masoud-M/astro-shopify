@@ -1,4 +1,5 @@
 ---
+import ShopifyVariantSelector from "@components/shopify/ShopifyVariantSelector.astro";
 import BaseLayout from "./BaseLayout.astro";
 
 const { productHandle, description, title } = Astro.props;
@@ -59,7 +60,11 @@ const { productHandle, description, title } = Astro.props;
                     ></shopify-money>
                   </div>
                 </div>
-                <shopify-variant-selector></shopify-variant-selector>
+
+                <ShopifyVariantSelector
+                  radioVariant="text"
+                  colorSwatchVariant="square"
+                />
 
                 <div class="product-card__buttons">
                   <!-- Add behavior to an existing button -->
