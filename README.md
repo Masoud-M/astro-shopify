@@ -1,4 +1,4 @@
-  <h3 align="center">Intermediate Astro kit - Decap CMS</h3>
+  <h3 align="center">Intermediate Astro kit - Decap CMS - Shopify</h3>
 
   <p align="center">
     This intermediate kit includes a pre-configured Astro setup, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, offering a fantastic introduction to the advantages of a Static Site Generator, complete with LESS preprocessing and a blog powered by Decap CMS. This kit also leverages the power of a few Astro tools such as, but not limited to, Content Collections, View Transitions, Astro components, scoped styling and scripting etc.
@@ -56,6 +56,14 @@ vanilla component library</a>. This kit aims to get any project off the ground i
 3. When created, clone the repository to your local machine.
 4. Run `npm install` to install all dependencies.
 5. Run `npm run dev` to start the project and spin up a development server on `localhost:4321`
+
+### Connecting to Shopify
+1. After configuring your Shopify store, install the <a href="https://apps.shopify.com/headless?search_id=0b60df4e-7892-4a56-91e5-e5ec4cc370b5&shallow_install_type=search&surface_detail=headless&surface_inter_position=1&surface_intra_position=1&surface_type=search" target="_blank">Headless app</a>
+ from the Shopify App Store.
+2. In the app settings, go to the Storefront API tab and click Manage.
+3. Copy your Public access token and update the following fields in `data/shopify.ts`
+
+If you need more help, <a href="https://shopify.dev/docs/api/storefront-web-components/getting-started" target="_blank">visit this page</a>.
 
 Next, it is recommended to update `data/client.json` with some new information about this project. Through the power of templating, the
 project's `<head>` and contact information will automatically be filled out, providing a first peek into some of the benefits of SSGs.
