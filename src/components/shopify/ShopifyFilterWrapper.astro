@@ -10,11 +10,12 @@ import ShopifySorting from "./ShopifySorting.astro";
 </div>
 
 <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const btn = document.getElementById("filter-btn");
     const content = document.getElementById("filter-content");
 
     btn.addEventListener("click", () => {
+      console.log("CLICKED");
       const isHidden = content.classList.contains("hidden");
       content.classList.toggle("hidden", !isHidden);
       btn.textContent = isHidden ? "Close Filters" : "Filter";
