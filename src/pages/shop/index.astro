@@ -8,8 +8,8 @@ import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE AS
 import { getImage } from "astro:assets";
 import ShopifyAddToCartBtn from "@components/shopify/ShopifyAddToCartBtn.astro";
 import ShopifyViewProductBtn from "@components/shopify/ShopifyViewProductBtn.astro";
-import ShopifySorting from "@components/shopify/ShopifySorting.astro";
 import ShopifyPagination from "@components/shopify/ShopifyPagination.astro";
+import ShopifyFilterWrapper from "@components/shopify/ShopifyFilterWrapper.astro";
 const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 ---
 
@@ -20,10 +20,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 >
   <section id="collection-1602">
     <div class="cs-container">
-      <div class="btn-wrapper">
-        <ShopifySorting />
-        <ShopifyPagination />
-      </div>
+      <ShopifyFilterWrapper />
       <div class="cs-listing">
         <shopify-list-context
           id="list-context"
@@ -80,6 +77,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
           </template>
         </shopify-list-context>
       </div>
+      <ShopifyPagination />
     </div>
   </section>
   <FAQ />
@@ -114,10 +112,6 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 </script>
 
 <style lang="less">
-  .btn-wrapper {
-    padding: clamp(1.5em, 25.95vw, 4em) 0;
-  }
-
   /*-- -------------------------- -->
 <---        Collection          -->
 <--- -------------------------- -*/

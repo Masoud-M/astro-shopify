@@ -1,0 +1,66 @@
+---
+import ShopifySorting from "./ShopifySorting.astro";
+---
+
+<div class="filter-section">
+  <button id="filter-btn" class="filter-toggle-btn">Filter</button>
+</div>
+<div id="filter-content" class="hidden filter-btn-wrapper">
+  <ShopifySorting />
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("filter-btn");
+    const content = document.getElementById("filter-content");
+
+    btn.addEventListener("click", () => {
+      const isHidden = content.classList.contains("hidden");
+      content.classList.toggle("hidden", !isHidden);
+      btn.textContent = isHidden ? "Close Filters" : "Filter";
+    });
+  });
+</script>
+
+<style>
+  .filter-section {
+    padding-top: clamp(1.5em, 25.95vw, 2em);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  .filter-toggle-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: fit-content;
+    place-self: end;
+  }
+
+  .filter-toggle-btn:hover {
+    background-color: var(--secondaryLight);
+  }
+
+  .filter-btn-wrapper {
+    padding: 1rem;
+    border: 1px solid inherit;
+    border-radius: 0.75rem;
+    background: transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
