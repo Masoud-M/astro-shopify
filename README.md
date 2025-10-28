@@ -31,9 +31,10 @@
 - [Project Structure](#projectStructure)
   - [Project Tree](#projectTree)
   - [Root Files and Folders](#rootFilesAndFolders)
-- [Expanding the Project](#expandingTheProject)
-  - [Configuring the CMS](#configuringTheCms)
+- [Customizing the Project](#customizingTheProject)
+  - [Configuring Decap CMS](#configuringDecapCms)
   - [Styling Decap preview pane](#stylingdecappreview)
+  - [Removing Decap CMS](#removingDecapCms)
   - [Astro Content Collections](#AstroContentCollections)
 - [Deployment](#deployment)
 - [Helpful Resources](#helpfulResources)
@@ -152,6 +153,8 @@ Before diving in, consider which e-commerce platform best fits your project need
 3. When created, clone the repository to your local machine.
 4. Run `npm install` to install all dependencies.
 5. Run `npm run dev` to start the project and spin up a development server on `localhost:4321`
+
+> **Don't need a CMS?** If you don't need content management for this project, you can easily [remove Decap CMS](#removingDecapCms).
 
 [NOTE: add steps for npx command when available]
 
@@ -902,15 +905,15 @@ An Astro configuration file. It's already set up for you, but you can extend it 
 
 A TypeScript configuration file. Optional. Includes TypeScript configuration options for your Astro project. Some features (like npm package imports) aren’t fully supported in the editor without a tsconfig.json file.
 
-<a name="expandingTheProject"></a>
+<a name="customizingTheProject"></a>
 
-## Expanding the Project
+## Customizing the Project
 
 This kit includes Decap CMS for blog content management. This section covers CMS configuration and customization options.
 
-<a name="configuringTheCms"></a>
+<a name="configuringDecapCms"></a>
 
-### Configuring the CMS
+### Configuring Decap CMS
 
 In `public/admin/`, you'll find a `config.yml` file which contains the configuration for the blog. While this project is set up to work with a blog out of the box, you are welcome to make changes using
 <a href="https://decapcms.org/docs/add-to-your-site/#configuration">Decap CMS'</a> documentation.
@@ -976,6 +979,39 @@ b. update the scripts
 ```
 
 Now, when `npm run dev` is run, a proxy server for the CMS is spun up on `localhost:8081`. That can often mean you run into errors if `localhost:8080` is already taken, so look out for that. You can locally access the blog via navigating to the `/admin` path (e.g. `http://localhost:4321/admin`). While running the local dev server, you won't need to login to access the admin dashboard.
+
+<a name="removingDecapCms"></a>
+
+### Removing Decap CMS
+
+If you don't need a CMS for your project, you can easily remove Decap CMS using the included removal script.
+
+#### When to Remove Decap CMS
+
+- Building a static site with no content management needs
+- Want to use local Content Collections without Decap
+- Prefer a different CMS solution
+- Simplifying the project for a specific use case
+
+#### How to Remove
+
+Run the removal script:
+
+```bash
+npm run remove-decap
+```
+
+The script will:
+1. Ask for confirmation before proceeding
+2. Ask if you want to remove blog content and configuration
+   - Choose **yes** to completely remove blog functionality
+   - Choose **no** to keep blog files for local Content Collections (without Decap)
+
+#### Safety & Recovery
+
+- **Files are moved, not deleted** - Everything goes to `scripts/deleted/`
+- **Easy to restore** - Copy files back from `scripts/deleted/` if needed
+- **Commit first** - Always commit changes before running the script
 
 <a name="astroContentCollections"></a>
 
