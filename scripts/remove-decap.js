@@ -1,10 +1,8 @@
 import { promises as fs } from "fs";
 import { join } from "path";
 import readline from "readline";
-import { exec } from "child_process";
-import { detectPackageManager } from "./scripts/utils/detect-package-manager.js";
-import { collectFiles } from "./scripts/utils/collect-files.js";
-import { replaceInFiles } from "./scripts/utils/replace-in-files.js";
+import { collectFiles } from "./utils/collect-files.js";
+import { replaceInFiles } from "./utils/replace-in-files.js";
 
 // Decap CMS file and directory paths
 const astroConfigPath = join("astro.config.mjs");
@@ -23,19 +21,6 @@ const blogLayoutsDestination = join(destinationDir, "layouts");
 const blogPagesDestination = join(destinationDir, "pages-blog");
 
 /**
- * Get the uninstall command based on package manager
- */
-function getUninstallCommand(packageManager, packages) {
-	const commands = {
-		npm: `npm uninstall ${packages.join(" ")}`,
-		yarn: `yarn remove ${packages.join(" ")}`,
-		pnpm: `pnpm remove ${packages.join(" ")}`,
-		bun: `bun remove ${packages.join(" ")}`,
-	};
-	return commands[packageManager];
-}
-
-/**
  * Move blog layout files (Blog*.astro)
  */
 async function moveBlogLayouts() {
@@ -52,16 +37,31 @@ async function moveBlogLayouts() {
 		);
 
 		// Move each blog layout file
+		let movedCount = 0;
 		for (const file of blogLayoutFiles) {
 			const sourcePath = join(blogLayoutsPath, file);
 			const destPath = join(blogLayoutsDestination, file);
-			await fs.rename(sourcePath, destPath);
-			console.log(`Moved ${sourcePath} to ${destPath}`);
+
+			try {
+				// Check if destination already exists and remove it
+				try {
+					await fs.access(destPath);
+					await fs.rm(destPath, { force: true });
+				} catch {
+					// Destination doesn't exist, which is fine
+				}
+
+				await fs.rename(sourcePath, destPath);
+				console.log(`Moved ${sourcePath} to ${destPath}`);
+				movedCount++;
+			} catch (error) {
+				console.error(`Error moving ${sourcePath}: ${error.message}`);
+			}
 		}
 
-		return blogLayoutFiles.length;
+		return movedCount;
 	} catch (error) {
-		console.error(`Error moving blog layouts: ${error}`);
+		console.error(`Error moving blog layouts: ${error.message}`);
 		return 0;
 	}
 }
@@ -187,6 +187,38 @@ async function cleanupContentConfig() {
 }
 
 /**
+ * Clean up navData.json by removing blog navigation link
+ */
+async function cleanupNavData() {
+	console.log("\nCleaning up navData.json...");
+
+	const navDataPath = join(process.cwd(), "src", "data", "navData.json");
+
+	try {
+		// Check if file exists
+		await fs.access(navDataPath);
+
+		const content = await fs.readFile(navDataPath, "utf-8");
+		const navData = JSON.parse(content);
+
+		// Filter out the blog entry
+		const filteredNavData = navData.filter(item => {
+			return item.key !== "Blog" && item.url !== "/blog/";
+		});
+
+		// Write back the updated JSON with proper formatting
+		await fs.writeFile(navDataPath, JSON.stringify(filteredNavData, null, 2) + "\n", "utf-8");
+		console.log("Cleaned up navData.json (Blog link removed)");
+	} catch (error) {
+		if (error.code === 'ENOENT') {
+			console.log("navData.json not found, skipping...");
+		} else {
+			console.error(`Error cleaning up navData.json: ${error.message}`);
+		}
+	}
+}
+
+/**
  * Main function to remove Decap CMS
  */
 async function removeDecapCMS() {
@@ -235,19 +267,47 @@ async function removeDecapCMS() {
 		// Move the admin folder
 		try {
 			await fs.access(adminSourcePath);
+
+			// Check if destination already exists and remove it
+			try {
+				await fs.access(adminDestinationPath);
+				await fs.rm(adminDestinationPath, { recursive: true, force: true });
+				console.log(`Removed existing ${adminDestinationPath}`);
+			} catch {
+				// Destination doesn't exist, which is fine
+			}
+
 			await fs.rename(adminSourcePath, adminDestinationPath);
 			console.log(`Moved ${adminSourcePath} to ${adminDestinationPath}`);
 		} catch (error) {
-			console.log(`Admin folder not found at ${adminSourcePath}, skipping...`);
+			if (error.code === 'ENOENT') {
+				console.log(`Admin folder not found at ${adminSourcePath}, skipping...`);
+			} else {
+				console.error(`Error moving admin folder: ${error.message}`);
+			}
 		}
 
 		// Move the admin.astro page
 		try {
 			await fs.access(adminPagePath);
+
+			// Check if destination already exists and remove it
+			try {
+				await fs.access(adminPageDestinationPath);
+				await fs.rm(adminPageDestinationPath, { force: true });
+				console.log(`Removed existing ${adminPageDestinationPath}`);
+			} catch {
+				// Destination doesn't exist, which is fine
+			}
+
 			await fs.rename(adminPagePath, adminPageDestinationPath);
 			console.log(`Moved ${adminPagePath} to ${adminPageDestinationPath}`);
 		} catch (error) {
-			console.log(`Admin page not found at ${adminPagePath}, skipping...`);
+			if (error.code === 'ENOENT') {
+				console.log(`Admin page not found at ${adminPagePath}, skipping...`);
+			} else {
+				console.error(`Error moving admin page: ${error.message}`);
+			}
 		}
 
 		// Move blog content if requested
@@ -255,10 +315,24 @@ async function removeDecapCMS() {
 			// Move blog content folder
 			try {
 				await fs.access(blogContentPath);
+
+				// Check if destination already exists and remove it
+				try {
+					await fs.access(blogContentDestination);
+					await fs.rm(blogContentDestination, { recursive: true, force: true });
+					console.log(`Removed existing ${blogContentDestination}`);
+				} catch {
+					// Destination doesn't exist, which is fine
+				}
+
 				await fs.rename(blogContentPath, blogContentDestination);
 				console.log(`Moved ${blogContentPath} to ${blogContentDestination}`);
 			} catch (error) {
-				console.log(`Blog content folder not found at ${blogContentPath}, skipping...`);
+				if (error.code === 'ENOENT') {
+					console.log(`Blog content folder not found at ${blogContentPath}, skipping...`);
+				} else {
+					console.error(`Error moving blog content: ${error.message}`);
+				}
 			}
 
 			// Move blog layout files
@@ -272,10 +346,24 @@ async function removeDecapCMS() {
 			// Move blog pages folder
 			try {
 				await fs.access(blogPagesPath);
+
+				// Check if destination already exists and remove it
+				try {
+					await fs.access(blogPagesDestination);
+					await fs.rm(blogPagesDestination, { recursive: true, force: true });
+					console.log(`Removed existing ${blogPagesDestination}`);
+				} catch {
+					// Destination doesn't exist, which is fine
+				}
+
 				await fs.rename(blogPagesPath, blogPagesDestination);
 				console.log(`Moved ${blogPagesPath} to ${blogPagesDestination}`);
 			} catch (error) {
-				console.log(`Blog pages folder not found at ${blogPagesPath}, skipping...`);
+				if (error.code === 'ENOENT') {
+					console.log(`Blog pages folder not found at ${blogPagesPath}, skipping...`);
+				} else {
+					console.error(`Error moving blog pages: ${error.message}`);
+				}
 			}
 		}
 	} catch (error) {
@@ -297,33 +385,11 @@ async function removeDecapCMS() {
 		await fs.writeFile(astroConfigPath, astroConfigContent, "utf-8");
 		console.log(`Updated ${astroConfigPath}`);
 
-		// Check for Decap packages
-		const packageManager = detectPackageManager();
-
-		// Try to uninstall Decap packages (though they're loaded via CDN)
-		console.log("Checking for Decap CMS packages...");
-		await new Promise((resolve, reject) => {
-			const packages = [
-				"decap-cms-app",
-				"netlify-cms-app",
-			];
-			const uninstallCommand = getUninstallCommand(packageManager, packages);
-			exec(uninstallCommand, (error, stdout, stderr) => {
-				if (error) {
-					// Package not found is expected - Decap is loaded via CDN
-					console.log("No Decap CMS packages found to uninstall (loaded via CDN)");
-					resolve();
-					return;
-				}
-				console.log(stdout);
-				resolve();
-			});
-		});
-
 		// Clean up blog imports if blog content was removed
 		if (removeBlogContent) {
 			await cleanupBlogImports();
 			await cleanupContentConfig();
+			await cleanupNavData();
 		}
 
 		// Scan for remaining references
