@@ -32,9 +32,7 @@ async function moveBlogLayouts() {
 		const files = await fs.readdir(blogLayoutsPath);
 
 		// Filter for Blog*.astro files
-		const blogLayoutFiles = files.filter(file =>
-			file.startsWith("Blog") && file.endsWith(".astro")
-		);
+		const blogLayoutFiles = files.filter((file) => file.startsWith("Blog") && file.endsWith(".astro"));
 
 		// Move each blog layout file
 		let movedCount = 0;
@@ -108,15 +106,15 @@ async function scanForReferences(removedBlogContent) {
 	// Report findings
 	if (decapReferences.length > 0) {
 		console.log(`\n⚠️  Found ${decapReferences.length} file(s) with Decap CMS references:`);
-		decapReferences.forEach(file => {
-			console.log(`   - ${file.replace(process.cwd(), '.')}`);
+		decapReferences.forEach((file) => {
+			console.log(`   - ${file.replace(process.cwd(), ".")}`);
 		});
 	}
 
 	if (blogReferences.length > 0 && removedBlogContent) {
 		console.log(`\n⚠️  Found ${blogReferences.length} file(s) with blog layout imports:`);
-		blogReferences.forEach(file => {
-			console.log(`   - ${file.replace(process.cwd(), '.')}`);
+		blogReferences.forEach((file) => {
+			console.log(`   - ${file.replace(process.cwd(), ".")}`);
 		});
 	}
 
@@ -134,13 +132,13 @@ async function cleanupBlogImports() {
 	try {
 		// Remove imports of blog layouts
 		const importPatterns = [
-			'import\\s+.*\\s+from\\s+["\'].*\\/layouts\\/BlogPostLayout.*["\'];?\\n?',
-			'import\\s+.*\\s+from\\s+["\'].*\\/layouts\\/BlogRecentArticles.*["\'];?\\n?',
-			'import\\s+.*\\s+from\\s+["\'].*\\/layouts\\/BlogRecentArticlesWithSidebar.*["\'];?\\n?'
+			"import\\s+.*\\s+from\\s+[\"'].*\\/layouts\\/BlogPostLayout.*[\"'];?\\n?",
+			"import\\s+.*\\s+from\\s+[\"'].*\\/layouts\\/BlogRecentArticles.*[\"'];?\\n?",
+			"import\\s+.*\\s+from\\s+[\"'].*\\/layouts\\/BlogRecentArticlesWithSidebar.*[\"'];?\\n?",
 		];
 
 		for (const pattern of importPatterns) {
-			replaceInFiles(srcDir, pattern, '', false);
+			replaceInFiles(srcDir, pattern, "", false);
 		}
 
 		console.log("Cleaned up blog layout imports");
@@ -150,10 +148,10 @@ async function cleanupBlogImports() {
 }
 
 /**
- * Clean up content.config.ts by removing blog collection
+ * Delete content.config.ts (no collections left after removing blog)
  */
 async function cleanupContentConfig() {
-	console.log("\nCleaning up content.config.ts...");
+	console.log("\nDeleting content.config.ts...");
 
 	const contentConfigPath = join(process.cwd(), "src", "content.config.ts");
 
@@ -161,27 +159,14 @@ async function cleanupContentConfig() {
 		// Check if file exists
 		await fs.access(contentConfigPath);
 
-		let content = await fs.readFile(contentConfigPath, "utf-8");
-
-		// Remove the blog collection definition (including comments)
-		// This regex matches from the comment line to the closing brace and semicolon
-		const blogCollectionRegex = /\/\/\s*Every collection must reflect Decap's config\.yml collection schema[\s\S]*?const blogsCollection = defineCollection\(\{[\s\S]*?\}\);?\n*/;
-		content = content.replace(blogCollectionRegex, "");
-
-		// Remove "blog: blogsCollection," from the collections export
-		const blogExportRegex = /blog:\s*blogsCollection,?\s*\n?/;
-		content = content.replace(blogExportRegex, "");
-
-		// Clean up any extra empty lines
-		content = content.replace(/\n{3,}/g, "\n\n");
-
-		await fs.writeFile(contentConfigPath, content, "utf-8");
-		console.log("Cleaned up content.config.ts (blog collection removed)");
+		// Delete the file
+		await fs.rm(contentConfigPath, { force: true });
+		console.log("Deleted content.config.ts (no collections remaining)");
 	} catch (error) {
-		if (error.code === 'ENOENT') {
+		if (error.code === "ENOENT") {
 			console.log("content.config.ts not found, skipping...");
 		} else {
-			console.error(`Error cleaning up content.config.ts: ${error}`);
+			console.error(`Error deleting content.config.ts: ${error.message}`);
 		}
 	}
 }
@@ -202,7 +187,7 @@ async function cleanupNavData() {
 		const navData = JSON.parse(content);
 
 		// Filter out the blog entry
-		const filteredNavData = navData.filter(item => {
+		const filteredNavData = navData.filter((item) => {
 			return item.key !== "Blog" && item.url !== "/blog/";
 		});
 
@@ -210,7 +195,7 @@ async function cleanupNavData() {
 		await fs.writeFile(navDataPath, JSON.stringify(filteredNavData, null, 2) + "\n", "utf-8");
 		console.log("Cleaned up navData.json (Blog link removed)");
 	} catch (error) {
-		if (error.code === 'ENOENT') {
+		if (error.code === "ENOENT") {
 			console.log("navData.json not found, skipping...");
 		} else {
 			console.error(`Error cleaning up navData.json: ${error.message}`);
@@ -229,12 +214,9 @@ async function removeDecapCMS() {
 
 	// First confirmation
 	const userConfirmed = await new Promise((resolve) => {
-		rl.question(
-			"Are you sure you want to remove Decap CMS from this project? (y/n): ",
-			(answer) => {
-				resolve(answer.toLowerCase() === "y");
-			},
-		);
+		rl.question("Are you sure you want to remove Decap CMS from this project? (y/n): ", (answer) => {
+			resolve(answer.toLowerCase() === "y");
+		});
 	});
 
 	if (!userConfirmed) {
@@ -245,13 +227,10 @@ async function removeDecapCMS() {
 
 	// Ask about removing blog content
 	const removeBlogContent = await new Promise((resolve) => {
-		rl.question(
-			"Do you want to remove all blog-related content? (src/content/blog, src/layouts/Blog*.astro, src/pages/blog) (y/n): ",
-			(answer) => {
-				rl.close();
-				resolve(answer.toLowerCase() === "y");
-			},
-		);
+		rl.question("Do you also want to remove all blog-related content and config files? (choose no if you want to run local Content Collections withut Decap) (y/n): ", (answer) => {
+			rl.close();
+			resolve(answer.toLowerCase() === "y");
+		});
 	});
 
 	// Newline for better output formatting
@@ -280,7 +259,7 @@ async function removeDecapCMS() {
 			await fs.rename(adminSourcePath, adminDestinationPath);
 			console.log(`Moved ${adminSourcePath} to ${adminDestinationPath}`);
 		} catch (error) {
-			if (error.code === 'ENOENT') {
+			if (error.code === "ENOENT") {
 				console.log(`Admin folder not found at ${adminSourcePath}, skipping...`);
 			} else {
 				console.error(`Error moving admin folder: ${error.message}`);
@@ -303,7 +282,7 @@ async function removeDecapCMS() {
 			await fs.rename(adminPagePath, adminPageDestinationPath);
 			console.log(`Moved ${adminPagePath} to ${adminPageDestinationPath}`);
 		} catch (error) {
-			if (error.code === 'ENOENT') {
+			if (error.code === "ENOENT") {
 				console.log(`Admin page not found at ${adminPagePath}, skipping...`);
 			} else {
 				console.error(`Error moving admin page: ${error.message}`);
@@ -328,7 +307,7 @@ async function removeDecapCMS() {
 				await fs.rename(blogContentPath, blogContentDestination);
 				console.log(`Moved ${blogContentPath} to ${blogContentDestination}`);
 			} catch (error) {
-				if (error.code === 'ENOENT') {
+				if (error.code === "ENOENT") {
 					console.log(`Blog content folder not found at ${blogContentPath}, skipping...`);
 				} else {
 					console.error(`Error moving blog content: ${error.message}`);
@@ -359,7 +338,7 @@ async function removeDecapCMS() {
 				await fs.rename(blogPagesPath, blogPagesDestination);
 				console.log(`Moved ${blogPagesPath} to ${blogPagesDestination}`);
 			} catch (error) {
-				if (error.code === 'ENOENT') {
+				if (error.code === "ENOENT") {
 					console.log(`Blog pages folder not found at ${blogPagesPath}, skipping...`);
 				} else {
 					console.error(`Error moving blog pages: ${error.message}`);
@@ -415,14 +394,12 @@ async function removeDecapCMS() {
 		console.log("Next steps:");
 		if (removeBlogContent) {
 			console.log("1. Update any navigation/links that point to /blog");
-			console.log("2. Check src/content.config.ts for blog collection definitions");
-			console.log("3. Run your build to ensure everything works");
-			console.log("4. All removed files are in scripts/deleted/ if you need to restore them\n");
+			console.log("2. Run your build to ensure everything works");
+			console.log("3. All removed files are in scripts/deleted/ if you need to restore them\n");
 		} else {
 			console.log("1. Run your build to ensure everything works");
 			console.log("2. All removed files are in scripts/deleted/ if you need to restore them\n");
 		}
-
 	} catch (error) {
 		console.error(`Error updating ${astroConfigPath}: ${error}`);
 	}
