@@ -1,14 +1,18 @@
+  > [!NOTE]
+  > This kit is currently in beta and in active development. Expect frequent changes.
+  
   <h3 align="center">Advanced Astro Starter Kit - Headless Shopify + Decap CMS</h3>
 
   <p align="center">
-    This advanced kit includes a pre-configured Astro setup with headless Shopify integration using Storefront Web Components, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, featuring a modern e-commerce solution with LESS preprocessing and a blog powered by Decap CMS. This kit leverages powerful Astro features including Content Collections, View Transitions and more.
+    This advanced kit includes a pre-configured Astro setup with headless Shopify integration using Storefront Web Components, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, featuring a modern e-commerce solution with LESS preprocessing and a blog powered by Decap CMS.
     <br/>
     <br/>
-    <a href="https://intermediate-astro-kit-decap-cms.netlify.app" target="_blank">View Live Result</a>
+    <a href="https://codestitch-astro-shopify.netlify.app/" target="_blank">View Live Result</a>
   </p>
 
   <p align="center">
-    Created and maintained by <a href="https://github.com/BuckyBuck135" target="_blank">BuckyBuck135</a>
+    Creator: <a href=" https://github.com/Masoud-M" target="_blank">Masoud-M</a><br>
+    Contributors: <a href="https://github.com/BuckyBuck135" target="_blank">BuckyBuck135</a>
   </p>
 
 ## Table of Contents
@@ -38,7 +42,6 @@
   - [Astro Content Collections](#AstroContentCollections)
 - [Deployment](#deployment)
 - [Helpful Resources](#helpfulResources)
-- [Acknowledgments](#acknowledgments)
 
 <a name="overview"></a>
 
@@ -154,6 +157,8 @@ Before diving in, consider which e-commerce platform best fits your project need
 4. Run `npm install` to install all dependencies.
 5. Run `npm run dev` to start the project and spin up a development server on `localhost:4321`
 
+
+> [!TIP]
 > **Don't need a CMS?** If you don't need content management for this project, you can easily [remove Decap CMS](#removingDecapCms).
 
 [NOTE: add steps for npx command when available]
@@ -161,15 +166,12 @@ Before diving in, consider which e-commerce platform best fits your project need
 ### Initial Configuration
 
 - update `src/_data/client.json` with information about your project and client.
-
 - update `src/styles/root.less` with your theme colors. 
-
-
 
 
 <a name="connectingToShopify"></a>
 
-## 🔌 Connecting to Shopify
+## Connecting to Shopify
 
 This section provides a comprehensive guide to integrating Shopify with your Astro project using Storefront Web Components.
 
@@ -290,11 +292,15 @@ Understanding the data flow helps you customize and extend the kit effectively:
 
 <a name="keyComponents"></a>
 
-### 📦 Key Components Reference
+### Key Components Reference
 
 Here are the core Storefront Web Components used in this kit, with examples from the codebase:
 
-#### Store Provider
+> [!TIP]
+> Click the labels to toggle the content on and off!
+
+<details>
+<summary>Store Provider</summary>
 
 The foundation - wraps your entire app to provide store context:
 
@@ -310,7 +316,10 @@ The foundation - wraps your entire app to provide store context:
 
 **Used in:** `src/components/shopify/ShopifyStoreProvider.astro`
 
-#### Product Listings
+</details>
+
+<details>
+<summary>Product Listings</summary>
 
 Query and render multiple products with `<shopify-list-context>`:
 
@@ -346,7 +355,10 @@ Query and render multiple products with `<shopify-list-context>`:
 
 **Used in:** `src/pages/shop/index.astro`
 
-#### Product Details
+</details>
+
+<details>
+<summary>Product Details</summary>
 
 Load a single product with `<shopify-context>`:
 
@@ -380,7 +392,10 @@ Load a single product with `<shopify-context>`:
 
 **Used in:** `src/layouts/ProductDetailsLayout.astro`
 
-#### Data Display Components
+</details>
+
+<details>
+<summary>Data Display Components</summary>
 
 **`<shopify-data>`** - Display any product/collection data:
 ```html
@@ -410,6 +425,8 @@ Load a single product with `<shopify-context>`:
 <shopify-variant-selector></shopify-variant-selector>
 ```
 
+</details>
+
 <a name="collections"></a>
 
 ### 🛍️ Collections
@@ -423,8 +440,8 @@ Collections are product groupings that help organize your store and make it easi
 - Essential for stores with 20+ products
 
 **Plan Requirements:**
-- **Collections are available on Basic Plan ($39/month) and above**
-- Not available on Starter Plan ($5/month)
+- **Collections are available on Basic Plan and above**
+- Not available on Starter Plan
 
 **Creating Collections in Shopify:**
 1. Log into your Shopify admin
@@ -465,15 +482,6 @@ Query products in a specific collection:
 <a name="cartCheckout"></a>
 
 ### 🛒 Cart & Checkout
-
-This kit includes built-in cart functionality powered by Shopify's Web Components.
-
-**How It Works:**
-1. Customer adds product to cart
-2. Cart drawer slides open showing cart contents
-3. Customer can update quantities or remove items
-4. Clicking "Checkout" redirects to Shopify's secure checkout
-5. Shopify handles payment processing and order fulfillment
 
 **Adding Items to Cart:**
 
@@ -774,136 +782,54 @@ Astro leverages an opinionated folder layout for your project. Every Astro proje
 .
 ├── public/
 │   ├── admin/
-|   |   └── config.yml
-|   |—— assets/
-|   |   |—— favicons/
-|   |   |—— fonts/
-|   |   |—— images/
-|   |   └── svgs/
-|   |—— _redirects
-|   |—— robots.txt
+│   │   └── config.yml
+│   ├── assets/
+│   │   ├── favicons/
+│   │   ├── fonts/
+│   │   ├── images/
+│   │   └── svgs/
+│   ├── _redirects
+│   └── robots.txt
+├── scripts/
+│   ├── utils/
+│   └── remove-decap.js
 ├── src/
-|   ├── assets/
-|   |   └—— images/
-|   |       └── blog/
-|   ├── components/
-|   ├── content/
-|   |   |—— config.ts
-|   |   └── blog/
-│   ├── _data/
-│   │   ├── client.json
-│   │   └── navData.json
+│   ├── assets/
+│   │   └── images/
+│   │       ├── blog/
+│   │       └── CTA/
+│   ├── components/
+│   │   ├── shopify/ => Shopify Web Components
+│   │   └── TemplateComponents/
+│   ├── content/
+│   │   ├── config.ts
+│   │   └── blog/
+│   ├── data/
+│   │   ├── client.json => Update me!
+│   │   ├── navData.json
+│   │   └── shopify.ts => Update me!
 │   ├── icons/
+│   ├── js/
+│   │   ├── nav.js
+│   │   └── utils.js
 │   ├── layouts/
 │   │   └── BaseLayout.astro
-|   ├── js/
-│   │   ├── nav.js
-|   |   └── utils.js
+│   ├── lib/
+│   │   └── shopify-api.ts
 │   ├── pages/
-|   |   └── blog/
-|   |   └── projects/
-|   └── styles/
-├── astro.config.mjs
+│   │   ├── blog/
+│   │   ├── projects/
+│   │   ├── shop/
+│   │   │   ├── [slug].astro
+│   │   │   └── index.astro
+│   │   └── shop-sitemap.xml.ts
+│   └── styles/
+├── astro.config.mjs => Update me!
 ├── postcss.config.cjs
 ├── package-lock.json
 ├── package.json
 └── tsconfig.json
 ```
-
-<a name="rootFilesAndFolders"></a>
-
-### Root Files and Folders
-
-#### `public/*`
-
-The `public/` directory is for files and assets in your project that do not need to be processed during Astro’s build process. The files in this folder will be copied into the build folder untouched, and then your site will be built.
-
-This behavior makes `public/` ideal for common assets like images and fonts, or special files such as`_redirects` and `robots.txt`.
-
-- \_redirects - To configure redirects. Read more on <a href="https://docs.netlify.com/routing/redirects/">Netlify</a>
-- content/ - Data to render pages from, such as the blog.
-- robots.txt - Instructions for site crawlers. Learn more, and generate your own, <a href="https://en.ryte.com/free-tools/robots-txt-generator/">here</a>
-
-You can place CSS and JavaScript in your public/ directory, but be aware that those files will not be bundled or optimized in your final build.
-
-##### `public/admin`
-
-This folder contains `config/yml`, which is where Decap CMS configuration options lives. [More information about options in Decap docs](https://decapcms.org/docs/configuration-options/)
-
-#### `src/*`
-
-The `src/` folder is where most of your project source code lives. This includes:
-
-- Pages
-- Layouts
-- Astro components
-- UI framework components (React, etc.)
-- Styles (CSS, Sass)
-- Markdown
-
-Astro processes, optimizes, and bundles your src/ files to create the final website that is shipped to the browser. Unlike the static public/ directory, your src/ files are built and handled for you by Astro.
-
-##### `src/assets`
-
-Contains all assets you want optimized by Astro (such as assets used in `<Picture />` components for example) must be placed in `src`.
-
-`public/assets/images/blog` is where the images uploaded on the CMS will be stored.
-
-##### `src/components`
-
-Components are reusable units of code for your HTML pages. These could be Astro components, or UI framework components like React or Vue. It is common to group and organize all of your project components together in this folder.
-
-##### `src/content`
-
-The src/content/ directory is reserved to store content collections organised in folders (e.g. `src/content/blog`) containing `.md` files, and an optional `config.ts` collections configuration file. No other files are allowed inside this folder.
-
-##### `src/data`
-
-This directory contains data files that are accessible within any template throughout the project.
-
-- `client.js` holds some information you may wish to define for a client. It's important to fill this file out with the correct information for your client, as many HTML meta tags, the sitemap, and robots.txt all use data from this file.
-
-- `navData.json` holds data to create the navigation of your site. See more information in the [navigation via navData.json section](#navigationViaFrontMatter)
-
-##### `src/icons`
-
-SVGs used by the <Icon /> component **must** be placed in this folder.
-
-##### `src/layouts`
-
-Layouts are Astro components that define the UI structure shared by one or more pages. The `BaseLayout.astro` file acts as a giant wrapper for each individual page, where the content is injected through the `<slot /> `component.
-
-##### `src/js`
-
-Contains helper functions.
-
-##### `src/pages`
-
-Pages are a special kind of component used to create new pages on your site. A page can be an Astro component, or a Markdown file that represents some page of content for your site.
-
-##### `src/styles`
-
-It is a common convention to store your CSS, Less or Sass files in a `src/styles` directory.
-
-#### `package.json` and `package-lock.json`
-
-The project's manifest. Standard NodeJS package files, containing the dependencies needed for the project to work.
-
-#### `node_modules/*`
-
-Created after you run `npm install`. This directory contains the code for all the dependencies that power this kit. It comes as standard with any NodeJS-powered project, much like the `package.json` and `package-lock.json` files. You can safely ignore this directory in your day-to-day work.
-
-#### `dist/`
-
-Created after running `npm build`. This will hold the final build of your site.
-
-#### `astro.config.mjs`
-
-An Astro configuration file. It's already set up for you, but you can extend it with integrations to use, build options, server options, and more.
-
-#### `tsconfig.json`
-
-A TypeScript configuration file. Optional. Includes TypeScript configuration options for your Astro project. Some features (like npm package imports) aren’t fully supported in the editor without a tsconfig.json file.
 
 <a name="customizingTheProject"></a>
 
@@ -1031,9 +957,56 @@ Content Collections can also be used on content that is not created via the CMS.
 
 ## Deployment
 
+### Sitemap Configuration
+
+This kit includes automatic sitemap generation for better SEO and search engine discoverability.
+
+#### How It Works
+
+**Static Pages:** The `@astrojs/sitemap` integration automatically discovers all static pages (home, about, blog, etc.) at build time.
+
+**Product Pages:** A custom sitemap endpoint fetches all product handles from your Shopify store via the Storefront API and generates product URLs.
+
+**Sitemap Index:** Both sitemaps are combined into a sitemap index for easy submission to search engines.
+
+#### Setup
+
+1. **Update your site URL** in `astro.config.mjs`:
+   ```javascript
+   const SITE_URL = "https://www.yourwebsite.com";
+   ```
+
+2. **Optional:** Change the shop route slug:
+   ```javascript
+   const SHOP_SLUG = "shop"; // Change if using different route
+   ```
+
+3. **Build your site:**
+   ```bash
+   npm run build
+   ```
+
+#### Generated Files
+
+- `dist/sitemap-index.xml` - References both sitemaps
+- `dist/sitemap-0.xml` - Static pages
+- `dist/shop-sitemap.xml` - Product pages
+
+#### Submitting to Search Engines
+
+Submit `https://yoursite.com/sitemap-index.xml` to:
+- Google Search Console
+- Bing Webmaster Tools
+- Other search engines
+
+The sitemap updates automatically on each build with current products.
+
 ### Choosing a Shopify Plan for Your Client
 
 When handing off the store to your client, they'll need to choose a Shopify plan. Here's what to recommend:
+
+> [!NOTE]
+> Plan features and prices current at the time of writing
 
 **Starter Plan ($5/month)**
 - Basic e-commerce functionality with buy buttons and checkout links
@@ -1041,7 +1014,7 @@ When handing off the store to your client, they'll need to choose a Shopify plan
 - **Transaction fees:** 5% per transaction (when not using Shopify Payments)
 - **Limitations:** No Collections, no discount codes, no custom domains
 
-**Basic Plan ($39/month)** ⭐ Recommended
+**Basic Plan ($39/month)** ⭐ 
 - Full e-commerce platform with all essential features
 - Best for: Most clients with 20+ products who want to grow
 - **Transaction fees:** 1.5% per transaction (when not using Shopify Payments)
@@ -1142,15 +1115,6 @@ If you need to brush up on the fundamentals:
 2. [Astro Crash Course in 20 Minutes!](https://www.youtube.com/watch?v=zrPVTf761OI)
 3. [Storefront Web Components Playground](https://webcomponents.shopify.dev/playground?view=editor)
 4. [Decap CMS Documentation](https://decapcms.org/docs/intro/)
-
-<a name="acknowledgments"></a>
-
-## Acknowledgments
-
-The author would like to acknowledge:
-
-- [Decapbridge.com] - Powers the interactions between Decap and the Github repo. Visit [Decapbridge Discord](<(https://discord.com/channels/1257728522361901219/1257728681380417600)>) and their [open-sources repos](https://github.com/decapbridge) for more information and support.
-
 
 
 Happy coding!

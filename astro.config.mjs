@@ -1,23 +1,19 @@
 import { defineConfig } from "astro/config";
-import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
-
+import sitemap from "@astrojs/sitemap";
 import netlify from "@astrojs/netlify";
 
+const SITE_URL = "https://www.yourwebsite.com"; // REPLACE WITH YOUR SITE URL
+const SHOP_SLUG = "shop"; // REPLACE WITH YOUR SHOP SLUG
+
 export default defineConfig({
-  output: 'static',
-
-  // update me!
-  site: "https://www.yourwebsite.com",
-
-  integrations: [
-    icon(),
-    sitemap({
-      filter: (page) => !page.includes("/admin"),
-      changefreq: "weekly",
-      priority: 0.7,
-    }),
-  ],
-
-  adapter: netlify(),
+	site: SITE_URL,
+	integrations: [
+		icon(),
+		sitemap({
+			filter: (page) => !page.includes(`/${SHOP_SLUG}/`) || page === `${SITE_URL}/${SHOP_SLUG}/`,
+			customSitemaps: [`${SITE_URL}/${SHOP_SLUG}-sitemap.xml`],
+		}),
+	],
+	adapter: netlify(),
 });
