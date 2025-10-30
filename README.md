@@ -716,7 +716,7 @@ Common issues and solutions:
 - Verify your Storefront API access scopes include `unauthenticated_read_product_listings`
 - Open browser console and check for error messages
 
-#### Filters Not Working
+#### Filters Not Working 
 
 **Problem:** Filter buttons don't appear or don't filter products
 
