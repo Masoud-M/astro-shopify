@@ -16,7 +16,8 @@
       "@styles/*": ["src/styles/*"],
       "@components/*": ["src/components/*"],
       "@js/*": ["src/js/*"],
-      "@lib/*": ["src/lib/*"]
+      "@lib/*": ["src/lib/*"],
+      "@/*": ["src/*"]
     },
     "incremental": true,
 		"skipLibCheck": true

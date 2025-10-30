@@ -3,7 +3,7 @@ title: Images in blog posts
 description: How to use images in blog posts
 author: Code Stitch
 date: 2024-06-08T15:27:34.591Z
-image: src/assets/images/blog/4p2a1864-copy.jpg
+image: "@/assets/images/blog/4p2a1864-copy.jpg"
 imageAlt: Bathroom
 isFeatured: false
 ---
