@@ -28,7 +28,7 @@ export default async (req) => {
 
         // Verify the webhook signature
         const hmacHeader = req.headers.get("x-shopify-hmac-sha256");
-        const secret = process.env.SECRET_SHOPIFY_WEBHOOK_SECRET;
+        const secret = process.env.SECRET_SHOPIFY_ACCESS_TOKEN;
 
         const verified = verifyShopifyWebhook(rawBody, hmacHeader, secret);
         if (!verified) {
