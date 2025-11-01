@@ -1,18 +1,24 @@
 // https://YOUR_SITE_NAME.netlify.app/.netlify/functions/shopify-webhook would be the URL you'd use in your Shopify webhook
 
-import CryptoJS from "crypto-js";
+import crypto from "crypto";
 
 let lastTriggered = 0; // simple in-memory throttle (resets on redeploy)
 
 function verifyShopifyWebhook(reqBody, hmacHeader, secret) {
     if (!hmacHeader || !secret) return false;
 
-    const digest = CryptoJS.HmacSHA256(reqBody, secret).toString(CryptoJS.enc.Base64);
+    const digest = crypto
+        .createHmac("sha256", secret)
+        .update(reqBody, "utf8")
+        .digest("base64");
 
-    return CryptoJS.timingSafeEqual(
-        CryptoJS.enc.Utf8.parse(digest),
-        CryptoJS.enc.Utf8.parse(hmacHeader)
-    );
+    const digestBuffer = Buffer.from(digest, "base64");
+    const hmacBuffer = Buffer.from(hmacHeader, "base64");
+
+    // Must have equal length for timingSafeEqual
+    if (digestBuffer.length !== hmacBuffer.length) return false;
+
+    return crypto.timingSafeEqual(digestBuffer, hmacBuffer);
 }
 
 export default async (req) => {
