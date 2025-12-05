@@ -1,0 +1,14 @@
+---
+import ProductDetailsLayout from "@layouts/ProductDetailsLayout.astro";
+
+export const prerender = false;
+const { slug } = Astro.params;
+
+const productHandle = slug;
+---
+
+<ProductDetailsLayout
+  productHandle={productHandle}
+  title={productHandle}
+  description={productHandle}
+/>

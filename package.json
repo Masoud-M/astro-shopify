@@ -1,24 +1,25 @@
 {
-	"name": "intermediate-astro-decap-cms-starter-kit",
-	"type": "module",
-	"version": "3.0.0",
-	"scripts": {
-		"astro": "astro dev",
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"remove-decap": "node scripts/remove-decap.js",
-		"remove-demo": "node scripts/remove-demo.js"
-	},
-	"dependencies": {
-		"@astrojs/sitemap": "^3.6.0",
-		"astro": "^5.16.3",
-		"astro-icon": "^1.1.5",
-		"autoprefixer": "^10.4.22",
-		"less": "^4.4.2"
-	},
-	"devDependencies": {
-		"netlify-plugin-cache": "^1.0.3"
-	}
+  "name": "advanced-astro-starter-kit-headless-shopify-decap-cms",
+  "type": "module",
+  "version": "3.0.0",
+  "scripts": {
+    "astro": "astro dev",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "remove-decap": "node scripts/remove-decap.js",
+    "remove-demo": "node scripts/remove-demo.js"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/netlify": "^6.6.0",
+    "astro": "^5.16.3",
+    "astro-icon": "^1.1.5",
+    "autoprefixer": "^10.4.22",
+    "less": "^4.4.2"
+  },
+  "devDependencies": {
+    "netlify-plugin-cache": "^1.0.3"
+  }
 }

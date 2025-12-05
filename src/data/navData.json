@@ -10,6 +10,11 @@
     "children": []
   },
   {
+    "key": "Shop",
+    "url": "/shop/",
+    "children": []
+  },
+  {
     "key": "Projects",
     "url": "/projects/",
     "children": [
@@ -31,6 +36,6 @@
   {
     "key": "Blog",
     "url": "/blog/",
-    "children": []     
+    "children": []
   }
 ]

@@ -1,0 +1,94 @@
+<div class="pagination-container">
+  <button
+    class="pagination-btn"
+    id="previous"
+    onclick="getElementById('list-context').previousPage();"
+  >
+    ← Previous Page
+  </button>
+
+  <button
+    class="pagination-btn"
+    id="next"
+    onclick="getElementById('list-context').nextPage();"
+  >
+    Next Page →
+  </button>
+</div>
+
+<script is:inline>
+  // Listen for the list context to update
+  // and disable the next and previous buttons when
+  // the list is at the end or beginning
+  document
+    .getElementById("list-context")
+    .addEventListener("shopify-list-context-update", (event) => {
+      const { hasNextPage, hasPreviousPage } = event.detail;
+
+      const nextBtn = document.getElementById("next");
+      const prevBtn = document.getElementById("previous");
+
+      if (!hasNextPage) {
+        nextBtn.setAttribute("disabled", "true");
+      } else {
+        nextBtn.removeAttribute("disabled");
+      }
+
+      if (!hasPreviousPage) {
+        prevBtn.setAttribute("disabled", "true");
+      } else {
+        prevBtn.removeAttribute("disabled");
+      }
+    });
+</script>
+
+<style>
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .pagination-btn {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      transform 0.15s ease;
+  }
+
+  .pagination-btn:hover {
+    background-color: var(--secondaryLight);
+    transform: translateY(-1px);
+  }
+
+  .pagination-btn:active {
+    transform: translateY(1px);
+  }
+
+  .pagination-btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Optional: make pagination responsive */
+  @media (max-width: 480px) {
+    .pagination-container {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .pagination-btn {
+      width: 100%;
+      max-width: 250px;
+    }
+  }
+</style>

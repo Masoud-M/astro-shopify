@@ -1,86 +1,154 @@
-<h3 align="center">Intermediate Astro kit - Decap CMS</h3>
+  > [!NOTE]
+  > This kit is currently in beta and in active development. Expect frequent changes.
+  
+  <h3 align="center">Advanced Astro Starter Kit - Headless Shopify + Decap CMS</h3>
 
   <p align="center">
-    This intermediate kit includes a pre-configured Astro setup, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, offering a fantastic introduction to the advantages of a Static Site Generator, complete with LESS preprocessing and a blog powered by Decap CMS. This kit also leverages the power of a few Astro tools such as, but not limited to, Content Collections, View Transitions, Astro components, scoped styling and scripting etc.
+    This advanced kit includes a pre-configured Astro setup with headless Shopify integration using Storefront Web Components, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, featuring a modern e-commerce solution with LESS preprocessing and a blog powered by Decap CMS.
     <br/>
     <br/>
-    <a href="https://intermediate-astro-kit-decap-cms.netlify.app" target="_blank">View Live Result</a>
+    <a href="https://codestitch-astro-shopify.netlify.app/" target="_blank">View Live Result</a>
   </p>
 
   <p align="center">
-    Created and maintained by <a href="https://github.com/BuckyBuck135" target="_blank">BuckyBuck135</a>
+    Creator: <a href=" https://github.com/Masoud-M" target="_blank">Masoud-M</a><br>
+    Contributors: <a href="https://github.com/BuckyBuck135" target="_blank">BuckyBuck135</a>
   </p>
 
 ## Table of Contents
 
 - [Overview](#overview)
-- [Getting Started](#gettingStarted)
-  - [Removing Demo Content](#removingDemoContent)
-  - [Removing Decap CMS](#removingDecapCms)
-  - [Exploring the Codebase with CodeTour](#exploringWithCodeTour)
 - [Prerequisites](#prerequisites)
-- [Features](#features)
-- [Project Tree](#projectTree)
+- [Getting Started](#gettingStarted)
+- [Connecting to Shopify](#connectingToShopify)
+  - [Shopify Partners Program](#shopifyPartners)
+  - [Setup Steps](#shopifySetup)
+- [Shopify Integration Reference](#shopifyIntegrationReference)
+  - [Understanding Storefront Web Components](#understandingComponents)
+  - [How This Kit Works](#howItWorks)
+  - [Key Components Reference](#keyComponents)
+  - [Collections](#collections)
+  - [Cart & Checkout](#cartCheckout)
+  - [Filters, Sorting & Pagination](#filtersSortingPagination)
+  - [Customizing Components](#customizingComponents)
+  - [Troubleshooting](#troubleshooting)
+- [Project Structure](#projectStructure)
+  - [Project Tree](#projectTree)
   - [Root Files and Folders](#rootFilesAndFolders)
-- [Customizing Your Site](#customizingYourSite)
-  - [Working with Components](#workingWithComponents)
-  - [Adding & Customizing Pages](#addingCustomizingPages)
-  - [Navigation System](#navigationSystem)
-  - [Styling Your Site](#stylingYourSite)
-  - [SEO & Metadata](#seoMetadata)
-  - [Images Optimization](#imagesOptimization)
-  - [Content Management & Blog](#contentManagement)
-  - [Scripts & Event Handling](#scriptsEventHandling)
-  - [Sitemap Configuration](#sitemapConfiguration)
+- [Customizing the Project](#customizingTheProject)
+  - [Configuring Decap CMS](#configuringDecapCms)
+  - [Styling Decap preview pane](#stylingdecappreview)
+  - [Removing Decap CMS](#removingDecapCms)
+  - [Astro Content Collections](#AstroContentCollections)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Acknowledgments](#acknowledgments)
-- [Conclusion](#conclusion)
+- [Helpful Resources](#helpfulResources)
 
 <a name="overview"></a>
 
 ## Overview
 
-This intermediate kit includes a pre-configured <a href="https://www.astro.build">Astro</a> environment, which
-allows for repeated components, centralized data and greater room to scale as your clients grow. The kit runs the latest major Astro version, v5. On top of this, a blog has been provided through [Decap CMS](https://decapcms.org/) to allow your clients to manage their content on their own.
+This advanced kit combines a pre-configured <a href="https://www.astro.build">Astro</a> environment with headless Shopify integration using <a href="https://shopify.dev/docs/api/storefront-web-components">Storefront Web Components</a>. Built for developers who need a modern e-commerce solution with full frontend control, this kit leverages Shopify's robust backend for product management, inventory, payment processing and checkout, while giving you complete freedom over the frontend experience.
 
-### TL;DR - Quick Start
+The kit also includes a [Decap CMS integration](https://decapcms.org/), allowing your clients to manage content like blog posts or photo galleries independently. Five starter pages built with <a href="https://codestitch.app/">CodeStitch's vanilla component library</a> are included, making it easy to swap sections and customize the design.
 
-1. Create from template
+This kit gets e-commerce projects off the ground quickly, with deployment possible in minutes. We recommend Netlify as a host.
 
-```bash
-npm create astro@latest -- --template CodeStitchOfficial/Intermediate-Astro-Decap-CMS
-```
+<a name="prerequisites"></a>
 
-2. Install and run
+## Prerequisites
 
-```bash
-npm install && npm run dev
-```
+This is an advanced kit. You should have:
 
-3. Configure your site
-   Edit src/data/client.ts with your business info
-   Edit public/admin/config.yml for CMS settings
+- **Required:** Solid understanding of HTML, CSS, and JavaScript
+- **Required:** Basic familiarity with Astro (components, layouts, routing)
+- **Recommended:** Understanding of React-style components and props
+- **Recommended:** Basic Shopify concepts (products, variants, collections)
 
-4. Deploy
-   Push to GitHub → Deploy on Netlify → Configure DecapBridge
+Much of the complex integration work has been done for you, but familiarity with these technologies will help you customize and extend the kit.
 
-### Key Files to Know:
+<!-- <a name="isShopifyRightForYou"></a>
 
-- `src/data/client.ts` - Site configuration
-- `src/data/navData.json` - Navigation structure
-- `src/styles/root.less` - Design tokens
-- `public/admin/config.yml` - CMS configuration
+[NOTE: this is a WIP, not even sure we should add it to be honest]
+## 🛒 Is Shopify Right For You?
 
-[Read full documentation below](#gettingStarted) or explore with [CodeTour](#exploringWithCodeTour).
+Before diving in, consider which e-commerce platform best fits your project needs. Here's a comparison of headless e-commerce solutions:
+
+<a name="shopifyHeadless"></a>
+
+### Shopify (Headless)
+
+**Best for:** Feature-rich stores with 20+ products, clients who need Collections for product organization, inventory management, and plans to scale.
+
+**Pricing:**
+- **Starter Plan:** $5/month - Basic e-commerce with buy buttons and checkout links. 5% commission fee on card transactions.
+- **Basic Plan:** $39/month - Includes Collections, custom domains, discount codes, and full Storefront API access. 1.5% commission fee on card transactions.
+
+**Pros:**
+- Complete commerce platform with robust backend
+- Excellent documentation and large ecosystem
+- Collections for organizing products
+- Built-in payment processing (Shopify Payments)
+- App store with thousands of integrations
+- Professional fulfillment services
+- Scalable infrastructure
+
+**Cons:**
+- Monthly subscription fees plus transaction fees (unless using Shopify Payments)
+- More complex setup compared to lightweight alternatives
+- Can be overkill for simple product catalogs
+
+**Choose Shopify when:** Your client wants to manage their products on the Shopify backend, needs Collections to organize their catalog, requires advanced inventory management, or has plans to scale their e-commerce operations.
+
+<a name="snipcart"></a>
+
+### Snipcart
+
+**Best for:** JAMstack and static site projects, developers wanting lightweight cart solutions with maximum frontend flexibility.
+
+**Pricing:** 2% of monthly transactions ($10 minimum fee)
+
+**Pros:**
+- All features included in pricing (abandoned cart recovery, inventory management)
+- Developer-friendly with excellent documentation
+- Lightweight and flexible frontend
+- Perfect for static sites and JAMstack architectures
+- No marketplace fees or paid extensions
+
+**Cons:**
+- Less robust backend features compared to Shopify
+- No visual admin interface for non-technical clients
+- Limited built-in analytics and reporting
+
+**Choose Snipcart when:** You're building a static or JAMstack site with a simple product catalog and want maximum control over the frontend experience.
+
+<a name="foxycart"></a>
+
+### FoxyCart
+
+**Best for:** Simple stores with basic cart needs and specific FoxyCart integration requirements.
+
+**Pricing:** Variable pricing with some features requiring paid add-ons ($50/month for abandoned cart features via CartHook)
+
+**Pros:**
+- Similar headless flexibility to Snipcart
+- Works well for simple stores
+
+**Cons:**
+- Smaller community and less documentation
+- Additional costs for advanced features
+- Less popular than alternatives
+
+**Choose FoxyCart when:** You have specific FoxyCart integration requirements or existing FoxyCart infrastructure.
+
+---
+
+**Bottom Line:** This kit uses Shopify because it provides the best balance of features, scalability, and developer experience for building professional e-commerce sites. The Storefront Web Components make integration seamless, and clients benefit from Shopify's robust backend and fulfillment services. -->
 
 <a name="gettingStarted"></a>
 
-## Getting Started
+## 🧑‍🚀 Getting Started
 
-There are two ways you can bootstrap your starter kit:
-
-### Using the Github template
+### Installation
 
 1. At the top right of the GitHub Repository, click the green _Use this template_ button,
    then click _Create a new repository_.
@@ -89,915 +157,689 @@ There are two ways you can bootstrap your starter kit:
 4. Run `npm install` to install all dependencies.
 5. Run `npm run dev` to start the project and spin up a development server on `localhost:4321`
 
-### Using the CLI
 
-1. Run this to initialize a new project from this template:
+> [!TIP]
+> **Don't need a CMS?** If you don't need content management for this project, you can easily [remove Decap CMS](#removingDecapCms).
 
-```sh
-npm create astro@latest -- --template CodeStitchOfficial/Intermediate-Astro-Decap-CMS
+[NOTE: add steps for npx command when available]
+
+### Initial Configuration
+
+- update `src/_data/client.json` with information about your project and client.
+- update `src/styles/root.less` with your theme colors. 
+
+
+<a name="connectingToShopify"></a>
+
+## Connecting to Shopify
+
+This section provides a comprehensive guide to integrating Shopify with your Astro project using Storefront Web Components.
+
+<a name="shopifyPartners"></a>
+
+### Shopify Partners Program (Recommended)
+
+Before starting e-commerce work, we recommend setting up a [Shopify Partners](https://www.shopify.com/partners) account to manage all your clients in one place. This can be done free of charge, and you can even earn money by referring clients to use Shopify and handing over stores.
+
+**Benefits:**
+- Manage multiple client stores from one dashboard
+- Create unlimited development stores for testing
+- Earn commissions when clients upgrade to paid plans
+- Access to partner resources and support
+
+**Getting Started with Partners:**
+
+1. **Sign up for Shopify Partners** - Visit [shopify.com/partners](https://www.shopify.com/partners) and create a free account
+
+2. **Create a development store** - Follow [this Shopify guide](https://help.shopify.com/en/partners/dashboard/managing-stores/development-stores) to create a development store for your client
+
+3. **Earn commissions** - When you transfer the store to your client, you'll earn a [referral commission](https://help.shopify.com/en/partners/how-to-earn#development-store-referrals) when they subscribe to a paid plan
+
+**Note:** If you're building for a single client or already have a Shopify store, you can skip the Partners program and use a standard Shopify account.
+
+<a name="shopifySetup"></a>
+
+### Setup Steps
+
+1. **Create or access your Shopify store**
+   - If using Shopify Partners: Create a development store from your Partners dashboard
+   - Or sign up at [Shopify](https://www.shopify.com/) if using a standard account
+   - Development stores are free during development (plan selection happens at client handoff)
+
+2. **Install the Headless app**
+   - Navigate to the [Headless app](https://apps.shopify.com/headless) in the Shopify App Store
+   - Click "Add app" to install it on your store
+   - This app provides the Storefront API access needed for headless commerce
+
+3. **Generate your Storefront API access token**
+   - In your Shopify admin, go to the Headless app
+   - Navigate to the **Storefront API** tab
+   - Click **Manage** to view your public access token
+   - Copy the **Public access token** (this is safe to use in client-side code)
+
+4. **Locate your Store Domain Name**
+  - In your Shopify admin, go to **Settings**
+  - Click on **Domains**, then copy your full domain name, including `https:`
+
+5. **Configure your kit**
+   - Open `src/data/shopify.ts` in your project
+   - Update the following fields:
+   ```typescript
+   export const PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN = "your-token-here" // obtained in step 3
+   export const PUBLIC_SHOPIFY_STORE_DOMAIN = "https://your-store.myshopify.com/" // obtained in step 4
+   export const PUBLIC_SHOPIFY_STORE_COUNTRY = "US"
+   export const PUBLIC_SHOPIFY_STORE_LANGUAGE = "en"
+   ```
+
+6. **Verify the connection**
+   - Run `npm run dev`
+   - Navigate to `/shop` on your local development server
+   - You should see your Shopify products loading
+
+<a name="shopifyIntegrationReference"></a>
+
+## 📚 Shopify Integration Reference
+
+This comprehensive reference covers all aspects of working with Shopify's Storefront Web Components in your Astro project.
+
+<a name="understandingComponents"></a>
+
+### 🧩 Understanding Storefront Web Components
+
+Storefront Web Components are ready-to-use custom HTML elements that let you integrate Shopify functionality into any website by simply embedding HTML code. No GraphQL queries or complex API calls required.
+
+**Key Benefits:**
+- **Declarative HTML:** Just add custom HTML elements to your pages
+- **Automatic data fetching:** Components fetch data from Shopify automatically
+- **Built-in cart & checkout:** Cart and checkout functionality works out of the box
+- **No build-time requirements:** Data is fetched at runtime, no static generation needed
+- **Type-safe:** Full TypeScript support
+
+**Resources:**
+- **Playground:** [Try components interactively](https://webcomponents.shopify.dev/playground?view=editor)
+- **Reference Docs:** [Complete component documentation](https://shopify.dev/docs/api/storefront-web-components)
+
+<a name="howItWorks"></a>
+
+### ⚙️ How This Kit Works
+
+Understanding the data flow helps you customize and extend the kit effectively:
+
+1. **Store Provider Wrapper**
+   - The `ShopifyStoreProvider.astro` component wraps your app with a `<shopify-store>` element
+   - This provides store context (domain, access token, country, language) to all child components
+   - Located in your layout or page files
+
+2. **Runtime Data Fetching**
+   - Unlike traditional headless setups, no GraphQL queries are needed at build time
+   - Web Components fetch data from Shopify when the page loads
+   - This means products are always up-to-date without rebuilding
+
+3. **Product Listings**
+   - The `/shop` page uses `<shopify-list-context>` to query and render multiple products
+   - Supports pagination, filtering, and sorting
+   - Uses a `<template>` element to define how each product card should look
+
+4. **Product Detail Pages**
+   - Dynamic routes (`/shop/[slug].astro`) use `<shopify-context>` to load individual products
+   - Supports variant selection, add to cart, and buy now functionality
+   - Includes loading placeholders for better UX
+
+5. **Cart System**
+   - Built-in Shopify cart components handle cart state
+   - Checkout redirects to Shopify's secure checkout
+   - No custom backend required
+
+<a name="keyComponents"></a>
+
+### Key Components Reference
+
+Here are the core Storefront Web Components used in this kit, with examples from the codebase:
+
+> [!TIP]
+> Click the labels to toggle the content on and off!
+
+<details>
+<summary>Store Provider</summary>
+
+The foundation - wraps your entire app to provide store context:
+
+```html
+<shopify-store
+  store-domain="https://your-store.myshopify.com/"
+  public-access-token="your-token"
+  country="US"
+  language="en">
+  <!-- Your app content -->
+</shopify-store>
 ```
 
-2. Choose a name for your project.
-3. Change into the newly created project directory.
-4. Run `npm install` to install all dependencies.
-5. Run `npm run dev` to start the project and spin up a development server on `localhost:4321`
+**Used in:** `src/components/shopify/ShopifyStoreProvider.astro`
 
-<a name="removingDemoContent"></a>
+</details>
 
-### Removing Demo Content
+<details>
+<summary>Product Listings</summary>
 
-If you want a clean slate to build your own site from scratch, you can remove all showcase/demo UI content while keeping the blog and Decap CMS functionality intact.
+Query and render multiple products with `<shopify-list-context>`:
 
-**Run the script:**
+```html
+<shopify-list-context
+  type="product"
+  query="products"
+  first="9"
+  sort-key="TITLE">
+  <template>
+    <article class="product-card">
+      <shopify-media
+        layout="constrained"
+        width="280"
+        height="350"
+        query="product.selectedOrFirstAvailableVariant.image">
+      </shopify-media>
 
-```bash
-npm run remove-demo
+      <h3><shopify-data query="product.title"></shopify-data></h3>
+
+      <shopify-money query="product.selectedOrFirstAvailableVariant.price">
+      </shopify-money>
+    </article>
+  </template>
+</shopify-list-context>
 ```
 
-**What gets removed:**
+**Attributes:**
+- `type`: "product" or "collection"
+- `query`: The Shopify query (e.g., "products", "collections")
+- `first`: Number of items to load
+- `sort-key`: "TITLE", "PRICE", "CREATED_AT", etc.
 
-- Demo pages (about, contact, projects, reviews)
-- Demo components (Hero, Services, Gallery, CTA, etc.)
-- Demo images (keeps placeholder.jpg)
+**Used in:** `src/pages/shop/index.astro`
 
-**What stays:**
+</details>
 
-- Blog system and Decap CMS
-- Core infrastructure (BaseLayout, Header, Footer, navigation)
-- All functionality and utilities
+<details>
+<summary>Product Details</summary>
 
-Files are moved to `scripts/deleted/` for backup.
+Load a single product with `<shopify-context>`:
 
-<a name="removingDecapCms"></a>
+```html
+<shopify-context type="product" handle="product-handle">
+  <template>
+    <div class="product-details">
+      <h1><shopify-data query="product.title"></shopify-data></h1>
 
-### Removing Decap CMS
+      <shopify-media
+        layout="constrained"
+        width="390"
+        height="490"
+        query="product.selectedOrFirstAvailableVariant.image">
+      </shopify-media>
 
-If you don't need a CMS for your project, you can easily remove Decap CMS using the included removal script.
+      <shopify-variant-selector></shopify-variant-selector>
 
-**Run the script:**
-
-```bash
-npm run remove-decap
+      <button onclick="getElementById('cart').addLine(event).showModal();"
+              shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale">
+        Add to cart
+      </button>
+    </div>
+  </template>
+</shopify-context>
 ```
 
-The script will ask for confirmation and whether you want to remove blog content too:
+**Attributes:**
+- `type`: "product" or "collection"
+- `handle`: The product handle (slug) from Shopify
 
-- Choose **yes** to completely remove blog functionality
-- Choose **no** to keep blog files for local Content Collections (without Decap)
+**Used in:** `src/layouts/ProductDetailsLayout.astro`
 
-**What gets removed:**
+</details>
 
-- CMS admin dashboard (`public/admin/`, `src/pages/admin.astro`)
-- Optionally: Blog content, layouts, pages, and components
+<details>
+<summary>Data Display Components</summary>
 
-Files are moved to `scripts/deleted/` for backup.
+**`<shopify-data>`** - Display any product/collection data:
+```html
+<shopify-data query="product.title"></shopify-data>
+<shopify-data query="product.vendor"></shopify-data>
+<shopify-data query="product.description"></shopify-data>
+```
 
-<a name="exploringWithCodeTour"></a>
+**`<shopify-money>`** - Display formatted prices:
+```html
+<shopify-money query="product.selectedOrFirstAvailableVariant.price"></shopify-money>
+<shopify-money query="product.selectedOrFirstAvailableVariant.compareAtPrice"></shopify-money>
+```
 
-### Exploring the Codebase with CodeTour
+**`<shopify-media>`** - Optimized images:
+```html
+<shopify-media
+  layout="constrained"
+  width="280"
+  height="350"
+  query="product.images">
+</shopify-media>
+```
 
-This template includes 8 interactive CodeTour walkthroughs to help you quickly understand the codebase architecture and start customizing your site. These tours guide you through key concepts, file locations, and best practices.
+**`<shopify-variant-selector>`** - Product options (size, color, etc.):
+```html
+<shopify-variant-selector></shopify-variant-selector>
+```
 
-#### How to Use
+</details>
 
-1. **Install the CodeTour extension** in VS Code from the [marketplace](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour)
-2. **View all tours**: Find the CODETOUR tab in your Explorer, or Open Command Palette (Ctrl/Cmd+Shift+P) → "CodeTour: View Tours"
-3. **Start a tour**: Click on any tour from the list
-4. **Navigate**: Use arrow buttons or keyboard shortcuts to move through steps
+<a name="collections"></a>
 
-Tours are independent and can be taken in any order. Each tour includes precise file locations, line numbers, and clear explanations to help you understand how everything works together.
+### 🛍️ Collections
 
-<a name="prerequisites"></a>
+Collections are product groupings that help organize your store and make it easier to browse.
 
-## Prerequisites
+**What are Collections?**
+- Groups of products organized by category, type, season, etc.
+- Can be manually curated or automatically generated based on rules
+- Help customers find related products
+- Essential for stores with 20+ products
 
-Only the vanilla web technologies are _required_ before using this kit, with some familiarity with Astro and React-style Components and props also recommended, but not essential. A lot of the leg-work for the non-vanilla technologies has been done for you. If you would like to read up on some of these things, we recommend the following resources:
+**Plan Requirements:**
+- **Collections are available on Basic Plan and above**
+- Not available on Starter Plan
 
-1. [Astro's Documentation](https://docs.astro.build/en/getting-started/)
-2. [Astro Crash Course in 20 Minutes!](https://www.youtube.com/watch?v=zrPVTf761OI)
-3. [Decap CMS' docs](https://decapcms.org/docs/intro/) can also be found should you wish to extend the CMS beyond what's in this kit
+**Creating Collections in Shopify:**
+1. Log into your Shopify admin
+2. Go to **Products > Collections**
+3. Click **Create collection**
+4. Choose manual (select products) or automated (define rules)
+5. Add products and save
+
+**Using Collections in Your Kit:**
+
+Query collections in `<shopify-list-context>`:
+```html
+<shopify-list-context
+  type="collection"
+  query="collections"
+  first="10">
+  <template>
+    <div class="collection-card">
+      <h3><shopify-data query="collection.title"></shopify-data></h3>
+      <shopify-data query="collection.description"></shopify-data>
+    </div>
+  </template>
+</shopify-list-context>
+```
+
+Query products in a specific collection:
+```html
+<shopify-list-context
+  type="product"
+  query="collection(handle: 'summer-collection').products"
+  first="12">
+  <template>
+    <!-- Product card markup -->
+  </template>
+</shopify-list-context>
+```
+
+<a name="cartCheckout"></a>
+
+### 🛒 Cart & Checkout
+
+**Adding Items to Cart:**
+
+From `src/components/shopify/ShopifyAddToCartBtn.astro`:
+```html
+<button onclick="getElementById('cart').addLine(event).showModal();"
+        shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale">
+  Add to cart
+</button>
+```
+
+**Buy Now (Skip Cart):**
+```html
+<button onclick="document.querySelector('shopify-store').buyNow(event)"
+        shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale">
+  Buy now
+</button>
+```
+
+**Cart Component:**
+
+The `ShopifyCart.astro` component uses `<shopify-cart-modal>` to display the cart:
+```html
+<shopify-cart-modal id="cart">
+  <template>
+    <!-- Cart UI markup -->
+  </template>
+</shopify-cart-modal>
+```
+
+**Cart Toggle Button:**
+
+From `ShopifyCartToggleBtn.astro`:
+```html
+<button onclick="getElementById('cart').showModal()">
+  Cart (<shopify-data query="cart.totalQuantity"></shopify-data>)
+</button>
+```
+
+<a name="filtersSortingPagination"></a>
+
+### 🔍 Filters, Sorting & Pagination
+
+Manage large product catalogs with built-in filtering, sorting, and pagination.
+
+#### Filters
+
+**Requirements:**
+- Shopify **Search & Discovery** app (free, built-in)
+- Configure filters in your Shopify admin
+
+**Setup:**
+1. In Shopify admin, go to **Online Store > Preferences**
+2. Find **Search & Discovery** app
+3. Enable filters (price, availability, vendor, tags, product type, etc.)
+
+**Using Filters:**
+
+From `src/components/shopify/ShopifyFilterWrapper.astro`:
+```html
+<shopify-filters>
+  <template>
+    <button shopify-filter-option>
+      <shopify-data query="option.label"></shopify-data>
+    </button>
+  </template>
+</shopify-filters>
+```
+
+#### Sorting
+
+From `src/components/shopify/ShopifySorting.astro`:
+```html
+<shopify-list-context sort-key="PRICE">
+  <!-- Products sorted by price -->
+</shopify-list-context>
+```
+
+**Available sort keys:**
+- `TITLE` - Alphabetically by title
+- `PRICE` - Low to high price
+- `CREATED_AT` - Newest first
+- `BEST_SELLING` - Most popular
+
+#### Pagination
+
+From `src/components/shopify/ShopifyPagination.astro`:
+```html
+<shopify-pagination>
+  <button shopify-previous-page>Previous</button>
+  <button shopify-next-page>Next</button>
+</shopify-pagination>
+```
+
+Configure items per page in `<shopify-list-context>`:
+```html
+<shopify-list-context first="12">
+  <!-- Shows 12 products per page -->
+</shopify-list-context>
+```
+
+<a name="customizingComponents"></a>
+
+### 🎨 Customizing Components
+
+This kit's Shopify components can be customized with CSS and JavaScript.
+
+#### Styling Components
+
+**Standard CSS:**
+
+Most components accept standard CSS classes:
+```html
+<shopify-media class="product-image"></shopify-media>
+```
+
+```css
+.product-image img {
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.product-image img:hover {
+  transform: scale(1.05);
+}
+```
+
+**Shadow DOM Parts:**
+
+Some components use Shadow DOM. Style them with `::part()`:
+
+```css
+/* Style variant selector buttons */
+shopify-variant-selector::part(radio) {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+}
+```
+
+#### Sold Out Products
+
+This kit includes styling for unavailable products. From `src/pages/shop/index.astro`:
+
+```html
+<article shopify-attr--disabled="!product.availableForSale">
+  <!-- Product card -->
+</article>
+```
+
+```css
+.cs-item:is([disabled]) {
+  cursor: not-allowed;
+  position: relative;
+}
+
+.cs-item:is([disabled])::before {
+  background-color: rgba(255, 255, 255, 0.5);
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cs-item:is([disabled])::after {
+  content: "Sold out";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.125rem;
+  font-weight: 700;
+  z-index: 2;
+}
+```
+
+#### Customizing Cart Behavior
+
+Modify cart actions in your components:
+
+```javascript
+// Add item and show cart
+document.getElementById('cart').addLine(event).showModal();
+
+// Update quantity
+document.getElementById('cart').updateLine({ id: lineId, quantity: newQuantity });
+
+// Remove item
+document.getElementById('cart').removeLine(lineId);
+```
+
+#### Custom Loading States
+
+Add placeholder content while Shopify data loads:
+
+```html
+<shopify-context type="product" handle={productHandle}>
+  <template>
+    <!-- Actual content -->
+  </template>
+
+  <!-- Shown while loading -->
+  <div class="placeholder">
+    <div class="skeleton-box"></div>
+  </div>
+</shopify-context>
+```
+
+<a name="troubleshooting"></a>
+
+### 🔧 Troubleshooting
+
+Common issues and solutions:
+
+#### Authentication Errors (401)
+
+**Problem:** "401 Unauthorized" or "Invalid access token"
+
+**Solutions:**
+- Verify your access token is correct in `src/data/shopify.ts`
+- Ensure the Headless app is installed on your Shopify store
+- Check that you're using the **public** access token (not private)
+- Verify your store URL is correct (format: `https://your-store.myshopify.com/`)
+
+#### No Products Showing
+
+**Problem:** Product list is empty
+
+**Solutions:**
+- Add products to your Shopify store (they must be published to the "Headless" channel)
+- Check that products are available in your selected country
+- Verify your Storefront API access scopes include `unauthenticated_read_product_listings`
+- Open browser console and check for error messages
+
+#### Filters Not Working 
+
+**Problem:** Filter buttons don't appear or don't filter products
+
+**Solutions:**
+- Install the **Search & Discovery** app from Shopify admin
+- Configure which filters to enable (price, vendor, tags, etc.)
+- Filters are only available with adequate product metadata
+- Basic Plan or higher required for some filter types
+
+#### Empty Cart or Cart Not Working
+
+**Problem:** Cart appears empty after adding items
+
+**Solutions:**
+- Ensure products have images (Shopify requires images for cart items)
+- Check browser console for JavaScript errors
+- Verify the `<shopify-store>` wrapper is in place
+- Clear browser cache and cookies
+
+#### Images Not Loading
+
+**Problem:** Product images don't display
+
+**Solutions:**
+- Verify products have images uploaded in Shopify admin
+- Check the `query` attribute on `<shopify-media>` components
+- Ensure images are published to the Headless channel
+- Check network tab for 404 errors
+
+#### Web Components Not Defined
+
+**Problem:** "Custom element not defined" errors
+
+**Solutions:**
+- Ensure the Storefront Web Components script is loaded
+- Check that `<shopify-store>` wraps your components
+- Wait for the page to fully load before accessing components
+- Verify you're not blocking third-party scripts
+
+**Still need help?** Check the [official Shopify Developer docs](https://shopify.dev/docs/api/storefront-web-components) or visit the [Shopify Community forums](https://community.shopify.com/).
 
 <a name="features"></a>
 
-## Features
 
-- Runs on Astro v5
-- Decap CMS integration with blog
-- SEO-ready with Open Graph, Twitter Cards, and JSON-LD structured data
-- Astro's View Transitions
-- Components, props, and scoped styles
-- Astro's built-in `<Picture />` component for image optimization
-- Content Collections with image validation
-- Accessible dropdown menus and navigation
-- Dark mode
-- [CodeStitch](https://codestitch.app/) HTML and CSS blocks
 
-This kit ships the following packages:
+<a name="projectStructure"></a>
 
-- [Astro Icon](https://www.astroicon.dev/) - Astro Icon is a straightforward icon system for the Astro framework.
-- [Autoprefixer](https://www.npmjs.com/package/autoprefixer) - PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from Can I Use. It is recommended by Google and used in Twitter and Alibaba.
-- [LESS](https://www.npmjs.com/package/less) - Less makes a few convenient additions to the CSS language, but you can also simply write standard CSS if you wish.
+## Project Structure
+
+Astro leverages an opinionated folder layout for your project. Every Astro project root should include the following directories and files:
+
+- `src/*` - Your project source code (components, pages, styles, etc.)
+- `public/*` - Your non-code, unprocessed assets (fonts, icons, etc.)
+- `package.json` - A project manifest.
+- `astro.config.mjs` - An Astro configuration file. (recommended)
+- `tsconfig.json` - A TypeScript configuration file. (recommended)
 
 <a name="projectTree"></a>
 
-## Project Tree
+### Project Tree
 
 ```
 .
-├── .tours/                     # Interactive CodeTour guides
-│   ├── getting-started.json
-│   ├── component-composition.json
-│   ├── decap-cms-blog-setup.json
-│   ├── image-optimization.json
-│   ├── navigation-system.json
-│   ├── styling-dark-mode.json
-│   ├── content-collections.json
-│   └── deployment-checklist.json
-├── public/                     # Static assets (unprocessed)
+├── public/
 │   ├── admin/
-│   │   └── config.yml          # Decap CMS configuration
+│   │   └── config.yml
 │   ├── assets/
 │   │   ├── favicons/
 │   │   ├── fonts/
-│   │   └── images/             # Static images (unoptimized)
+│   │   ├── images/
+│   │   └── svgs/
 │   ├── _redirects
 │   └── robots.txt
+├── scripts/
+│   ├── utils/
+│   └── remove-decap.js
 ├── src/
 │   ├── assets/
-│   │   └── images/             # Optimized by Astro
-│   │       └── blog/
-│   ├── components/             # Component-per-folder pattern
-│   │   ├── Banner/
-│   │   │   └── Banner.astro
-│   │   ├── CTA/
-│   │   │   ├── CTASimple.astro
-│   │   │   └── CTAArtDirection.astro
-│   │   ├── Header/             # Dual header system
-│   │   │   ├── DynamicHeader.astro  # Default (data-driven)
-│   │   │   └── StaticHeader.astro   # Alternative (hardcoded)
-│   │   ├── Hero/
-│   │   │   └── Hero.astro
-│   │   ├── Meta/               # SEO component
-│   │   │   └── Meta.astro
-│   │   └── ...
+│   │   └── images/
+│   │       ├── blog/
+│   │       └── CTA/
+│   ├── components/
+│   │   ├── shopify/ => Shopify Web Components
+│   │   └── TemplateComponents/
 │   ├── content/
+│   │   ├── config.ts
 │   │   └── blog/
-│   ├── content.config.ts
-│   ├── data/                   # Site configuration
-│   │   ├── client.ts           # Business & site data
-│   │   └── navData.json        # Navigation structure
-│   ├── icons/                  # SVGs for Icon component
+│   ├── data/
+│   │   ├── client.json => Update me!
+│   │   ├── navData.json
+│   │   └── shopify.ts => Update me!
+│   ├── icons/
 │   ├── js/
-│   │   ├── blogPostingSchema.js   # BlogPosting JSON-LD
-│   │   ├── localBusinessSchema.js # LocalBusiness JSON-LD
 │   │   ├── nav.js
 │   │   └── utils.js
 │   ├── layouts/
-│   │   ├── BaseLayout.astro
-│   │   ├── BlogPostLayout.astro
-│   │   └── ...
+│   │   └── BaseLayout.astro
+│   ├── lib/
+│   │   └── shopify-api.ts
 │   ├── pages/
 │   │   ├── blog/
 │   │   ├── projects/
-│   │   └── ...
+│   │   ├── shop/
+│   │   │   ├── [slug].astro
+│   │   │   └── index.astro
+│   │   └── shop-sitemap.xml.ts
 │   └── styles/
-│       ├── root.less           # Base styles
-│   │   └── ...
-├── astro.config.mjs
+├── astro.config.mjs => Update me!
+├── postcss.config.cjs
+├── package-lock.json
 ├── package.json
 └── tsconfig.json
 ```
 
-<a name="rootFilesAndFolders"></a>
+<a name="customizingTheProject"></a>
 
-### Root Files and Folders
+## Customizing the Project
 
-#### `public/*`
+This kit includes Decap CMS for blog content management. This section covers CMS configuration and customization options.
 
-The `public/` directory is for files and assets in your project that do not need to be processed during Astro's build process. The files in this folder will be copied into the build folder untouched, and then your site will be built.
+<a name="configuringDecapCms"></a>
 
-This behavior makes `public/` ideal for common assets like images and fonts, or special files such as`_redirects` and `robots.txt`.
-
-- \_redirects - To configure redirects. Read more on <a href="https://docs.netlify.com/routing/redirects/">Netlify</a>
-- content/ - Data to render pages from, such as the blog.
-- robots.txt - Instructions for site crawlers. Learn more, and generate your own, <a href="https://en.ryte.com/free-tools/robots-txt-generator/">here</a>
-
-You can place CSS and JavaScript in your public/ directory, but be aware that those files will not be bundled or optimized in your final build.
-
-##### `public/admin`
-
-This folder contains `config/yml`, which is where Decap CMS configuration options lives. [More information about options in Decap docs](https://decapcms.org/docs/configuration-options/)
-
-#### `src/*`
-
-The `src/` folder is where most of your project source code lives. This includes:
-
-- Pages
-- Layouts
-- Astro components
-- UI framework components (React, etc.)
-- Styles (CSS, LESS)
-- Markdown
-
-##### `src/assets`
-
-Contains all assets you want optimized by Astro (such as assets used in `<Picture />` components for example).
-
-Images uploaded on the CMS will be stored in `src/assets/images/blog`
-
-##### `src/components`
-
-Components are reusable units of code for your HTML pages. These could be Astro components, or UI framework components like React or Vue. It is common to group and organize all of your project components together in this folder.
-
-##### `src/content`
-
-The src/content/ directory is reserved to store content collections organised in folders (e.g. `src/content/blog`) containing `.md` files, and an optional `config.ts` collections configuration file. No other files are allowed inside this folder.
-
-##### `src/data`
-
-This directory contains data files that are accessible within any template throughout the project.
-
-**`client.ts`** - Site configuration.
-
-**`navData.json`** - Navigation structure. See more in the [Navigation System section](#navigationViaNavData)
-
-##### `src/icons`
-
-SVGs used by the <Icon /> component **must** be placed in this folder.
-
-##### `src/layouts`
-
-Layouts are Astro components that define the UI structure shared by one or more pages. The `BaseLayout.astro` file acts as a giant wrapper for each individual page, where the content is injected through the `<slot /> `component.
-
-##### `src/js`
-
-Contains helper functions.
-
-##### `src/pages`
-
-Pages are a special kind of component used to create new pages on your site. A page can be an Astro component, or a Markdown file that represents some page of content for your site.
-
-##### `src/styles`
-
-It is a common convention to store your CSS, Less or Sass files in a `src/styles` directory.
-
-#### `package.json` and `package-lock.json`
-
-The project's manifest. Standard NodeJS package files, containing the dependencies needed for the project to work.
-
-#### `node_modules/*`
-
-Created after you run `npm install`. This directory contains the code for all the dependencies that power this kit. It comes as standard with any NodeJS-powered project, much like the `package.json` and `package-lock.json` files. You can safely ignore this directory in your day-to-day work.
-
-#### `dist/`
-
-Created after running `npm build`. This will hold the final build of your site.
-
-#### `astro.config.mjs`
-
-An Astro configuration file. It's already set up for you, but you can extend it with integrations to use, build options, server options, and more.
-
-#### `tsconfig.json`
-
-A TypeScript configuration file. Optional. Includes TypeScript configuration options for your Astro project. Some features (like imports aliases `@assets/`) aren't fully supported in the editor without a tsconfig.json file.
-
-<a name="customizingYourSite"></a>
-
-## Customizing Your Site
-
-This section covers everything you need to make this template your own. Whether you're making small tweaks or completely rebuilding the site, you'll find guidance on customizing components, pages, styling, SEO, images, and content management.
-
-<a name="workingWithComponents"></a>
-
-### Component Architecture
-
-This template is opinionated and uses a **component-per-folder** pattern.
-
-#### Folder Structure
-
-Each component lives in its own folder:
-
-```
-src/components/
-├── Hero/
-│   └── Hero.astro
-├── Services/
-│   └── Services.astro
-├── CTA/
-│   └── CTASimple.astro
-│   └── CTAComplex.astro
-└── Footer/
-    └── Subscribe.astro
-    └── Footer.astro
-```
-
-Components sharing a common theme or use can be grouped together.
-
-#### Using Components
-
-Components are used throughout your pages by importing and including them:
-
-```astro
----
-import Hero from '@components/Hero/Hero.astro';
-import Services from '@components/Services/Services.astro';
----
-
-<Hero />
-<Services />
-```
-
-#### Customizing Components
-
-To customize a component, open the component file and edit the HTML, content, or styles directly. For example, to change the Hero text, edit `src/components/Hero/Hero.astro`.
-
-#### Replacing with CodeStitch Sections
-
-To replace a component with a different CodeStitch section:
-
-1. Browse [codestitch.app](https://codestitch.app/) and select a stitch
-2. Copy the HTML, CSS, and any JavaScript
-3. Paste into the existing component file (or create a new one)
-4. Update any image paths and component references
-5. Add the component to your page
-
-This keeps components organized and easy to find.
-
-<a name="addingCustomizingPages"></a>
-
-### Adding & Customizing Pages
-
-Adding new pages is straightforward:
-
-1. **Use the template** - Copy `src/pages/_template.astro` as a starting point
-2. **Create your page** - Add a new file to `src/pages/` (e.g., `services.astro`)
-3. **Add to navigation** - Include it in `src/data/navData.json` (if using the DynamicHeader component)
-
-**Basic page structure:**
-
-```astro
----
-// Import components you need
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Hero/Hero.astro';
----
-
-<BaseLayout
-  title="Page Title"
-  description="Page description for meta tags"
->
-  <Hero />
-  <!-- Add more components -->
-</BaseLayout>
-```
-
-**Creating sub-pages:**
-
-Create a folder under `src/pages/` and add `.astro` files inside:
-
-```
-src/pages/
-├── services/
-│   ├── consulting.astro
-│   └── development.astro
-```
-
-Update `navData.json` to add the parent page with a `children` array - the navigation will automatically create a dropdown menu. See `src/pages/projects/` for an example.
-
-<a name="navigationSystem"></a>
-
-### Navigation System
-
-This template provides **two Header component options** to suit different workflows:
-
-#### 1. DynamicHeader (Default) - `src/components/Header/DynamicHeader.astro`
-
-The header navigation is powered by the `navData.json` file, making it easy to manage navigation without editing component code.
-
-**How it works:**
-
-- Each page in the navigation is an item with a `key` property (page title to be displayed) and a `url` property (include a trailing slash)
-- To add subpages, populate the `children` array with page objects (containing a `key` and `url` property)
-- If a page has a populated `children` array, a dropdown menu will be automatically created
-- Uses helper functions from `src/js/utils.js` (`isCurrentPage()`, `getDropdownId()`) for cleaner code
-- Navigation links render in the order they're declared
-
-#### 2. StaticHeader - `src/components/Header/StaticHeader.astro`
-
-A hardcoded navigation option that's copy/paste friendly from CodeStitch.
-
-#### Using a New CodeStitch Header
-
-If you want to use a different header design from the CodeStitch library, here's the process:
-
-1. **Browse and select** a header stitch from [codestitch.app](https://codestitch.app/)
-2. **Create a new component** file in `src/components/Header/` (e.g., `CustomHeader.astro`)
-3. **Copy the HTML** from CodeStitch and paste it into your component between the `---` frontmatter and the `<style>` tag
-4. **Copy the LESS/CSS** from CodeStitch and paste it into the component's `<style lang="less">` tag
-5. **Copy the JavaScript** from CodeStitch and paste it into `src/js/nav.js`, wrapped with `document.addEventListener('astro:page-load', () => {})` for View Transitions compatibility
-6. **Update imports and paths:**
-   - Replace image paths with Icon components where appropriate
-   - Import and add `<DarkModeToggle />` if your design includes dark mode
-   - Update any hardcoded URLs to use your actual routes
-7. **Update BaseLayout.astro** to import your new header component
-8. **Optional:** To make your custom header work with `navData.json`, replace the static navigation list with the `.cs-ul-wrapper` pattern shown below
-
-#### Making a CodeStitch Header Work with navData.json
-
-If you want your custom CodeStitch header to use data-driven navigation, replace the navigation list in your stitch with this wrapper:
-
-```JSX
-<div class="cs-ul-wrapper" id="cs-ul-wrapper">
-  <ul id="cs-expanded" class="cs-ul">
-    {navData.map((entry) => (
-      <li
-        class:list={[
-          "cs-li",
-          { "cs-dropdown": entry.children?.length > 0 },
-        ]}
-      >
-        {entry.children?.length > 0 ? (
-          // If entry has children in navData.json, create a button and a dropdown icon
-          <button
-            id={getDropdownId(entry.key)}
-            aria-expanded="false"
-            aria-haspopup="menu"
-            class:list={[
-              "cs-li-link cs-dropdown-toggle",
-              { "cs-active": Astro.url.pathname.includes(entry.url)},
-            ]}
-          >
-            {entry.key}
-            <Icon name="mdi--caret" class="cs-drop-icon" />
-          </button>
-        ) : (
-          // If entry does not have children in navData.json, create an anchor
-          <a
-            href={entry.url}
-            class:list={[
-              "cs-li-link",
-              { "cs-active": Astro.url.pathname === entry.url },
-            ]}
-            aria-current={isCurrentPage(Astro.url.pathname, entry.url)}
-          >
-            {entry.key}
-          </a>
-        )}
-
-        {entry.children?.length > 0 && (
-          // If entry has children in navData.json, create a drop down menu
-          <ul class="cs-drop-ul" aria-labelledby={getDropdownId(entry.key)}>
-            {entry.children.map((child) => (
-              <li class="cs-drop-li">
-                <a
-                  href={child.url}
-                  class="cs-li-link cs-drop-link"
-                  aria-current={isCurrentPage(Astro.url.pathname, child.url)}
-                >
-                  {child.key}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
-    ))}
-  </ul>
-</div>
-```
-
-Don't forget to import the helper functions in your component's frontmatter:
-
-```javascript
-import { isCurrentPage, getDropdownId } from "@js/utils.js";
-import navData from "@data/navData.json";
-```
-
-#### Manual Active State Management
-
-If you prefer to manage active states manually without `navData.json`, you can use this approach:
-
-```JSX
-<li class="cs-li">
-  <a href="/about/" class:list={["cs-li-link", {"cs-active": "/about/" === Astro.url.pathname }]}>About</a>
-</li>
-```
-
-In this case, if the page slug is "about", the `.cs-active` class will be applied. You can adjust the page slug value to whatever you require ("blog", "/", "services", etc).
-
-For dropdowns, use a similar approach on the parent dropdown's class attribute, checking if any of the child pages are active:
-
-```JSX
-<li class="nav-link cs-li cs-dropdown">
-  <span class:list={["cs-li-link nav-link",
-    { 'cs-active': '/annapolis-custom-closets/' === Astro.url.pathname },
-    { 'cs-active': '/bowie-custom-closets/' === Astro.url.pathname },
-    { 'cs-active': '/severna-park-custom-closets/' === Astro.url.pathname },
-    { 'cs-active': '/odenton-custom-closets/' === Astro.url.pathname },
-  ]}>
-    Areas Served
-    <img class="cs-drop-icon" src="/assets/images/down.svg" alt="dropdown icon" width="15" height="15" decoding="async" aria-hidden="true">
-  </span>
-  <ul class="cs-drop-ul">
-    <li class="cs-drop-li">
-      <a href="/annapolis-custom-closets/" class="cs-drop-link">Annapolis</a>
-    </li>
-    <li class="cs-drop-li">
-      <a href="/bowie-custom-closets/" class="cs-drop-link">Bowie</a>
-    </li>
-    <li class="cs-drop-li">
-      <a href="/severna-park-custom-closets/" class="cs-drop-link">Severna Park</a>
-    </li>
-    <li class="cs-drop-li">
-      <a href="/odenton-custom-closets/" class="cs-drop-link">Odenton</a>
-    </li>
-  </ul>
-</li>
-```
-
-In the above example, we're checking if the active page slug matches any of the listed options and applying the `.cs-active` style to the parent if it does.
-
-<a name="stylingYourSite"></a>
-
-### Styling Your Site
-
-#### CSS Variables
-
-Customize site-wide colors, fonts and other properties in `src/styles/root.less`:
-
-```less
-:root {
-	--primary: #aff425;
-	--primaryLight: #7aa329;
-	--secondary: #ffba43;
-	--bodyTextColor: #4e4b66;
-	--bodyTextColorWhite: #fafbfc;
-	// ... more variables
-}
-```
-
-#### Dark Mode
-
-All dark mode styles are consolidated in `src/styles/dark.less` for easy maintenance.
-
-Dark mode is managed by DarkModeToggle.astro and persisted in BaseLayout.
-
-#### Scoped Component Styles
-
-Components use scoped `<style>` tags:
-
-```astro
-<section id="hero">
-  <h1>Welcome</h1>
-</section>
-
-<style lang="less">
-  #hero {
-    padding: 4rem 1rem;
-    h1 {
-      font-size: 3rem;
-    }
-  }
-</style>
-```
-
-You can also create an external stylesheet and import it in the frontmatter, or in BaseLayout for a global stylesheet.
-
-<a name="seoMetadata"></a>
-
-### SEO & Metadata
-
-#### Centralized SEO Configuration
-
-SEO data is centralized in `src/data/client.ts`, providing a single source of truth for all metadata, structured data, and social sharing settings across your site.
-
-#### Meta Component (`src/components/Meta/Meta.astro`)
-
-The template uses a dedicated Meta component for comprehensive SEO coverage, automatically included in BaseLayout.
-
-**Features:**
-
-- Open Graph tags (title, description, image, locale, site name)
-- Twitter Cards (summary_large_image)
-- JSON-LD structured data (LocalBusiness for all pages)
-- Automatic social image handling with fallback
-- Enhanced meta tags for articles (author, published/modified dates)
-
-**Social Image Strategy:**
-
-- Pages with heroImage: Uses provided image (optimized to 1200x600 webp)
-- Pages without heroImage: Falls back to `/assets/social.jpg`
-- Blog posts: Automatically uses post's featured image
-
-#### BaseLayout Props
-
-BaseLayout accepts simple props with sensible defaults from `client.ts`:
-
-```typescript
-interface Props {
-	title?: string; // Page title (defaults to SITE.title)
-	description?: string; // Meta description (defaults to SITE.description)
-	heroImage?: HeroImage; // Optional social sharing image
-}
-```
-
-**Basic page (uses defaults from client.ts):**
-
-```astro
-<BaseLayout
-  title="About Us"
-  description="Learn about our company"
->
-  <!-- Page content -->
-</BaseLayout>
-```
-
-**Page with social image:**
-
-```astro
----
-import heroImage from "@assets/images/hero.jpg";
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: heroImage, format: "webp" });
----
-
-<BaseLayout
-  title="Projects"
-  description="Our portfolio"
-  heroImage={optimizedImage}
->
-  <!-- Page content -->
-</BaseLayout>
-```
-
-#### Extending SEO Metadata
-
-##### Adding Custom Open Graph Tags
-
-Edit `src/components/Meta/Meta.astro` to add properties like article publish dates, Twitter-specific metadata, or additional schema.org types.
-
-##### Adding Custom JSON-LD Structured Data
-
-The template automatically generates LocalBusiness (all pages) and BlogPosting (blog posts) schemas. To add custom JSON-LD on specific pages, use the **schema slot** - no component modifications needed!
-
-**Approach 1: Inline Schema**
-
-Add custom JSON-LD directly in any page:
-
-```astro
-<BaseLayout title="FAQ" description="Frequently asked questions">
-  <script slot="schema" is:inline type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "What services do you offer?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We offer consulting and development services."
-        }
-      }]
-    }
-  </script>
-
-  <!-- Page content -->
-</BaseLayout>
-```
-
-**Approach 2: Reusable Schema Functions**
-
-For schemas used across multiple pages, create helper functions following the existing pattern (`localBusinessSchema.js`, `blogPostingSchema.js`):
-
-```javascript
-// src/js/faqSchema.js
-import { SITE } from "@data/client";
-
-export function getFAQSchema(faqs) {
-	return {
-		"@context": "https://schema.org",
-		"@type": "FAQPage",
-		mainEntity: faqs.map((item) => ({
-			"@type": "Question",
-			name: item.question,
-			acceptedAnswer: {
-				"@type": "Answer",
-				text: item.answer,
-			},
-		})),
-	};
-}
-```
-
-Usage in page:
-
-```astro
----
-import { getFAQSchema } from "@js/faqSchema";
-const faqSchema = getFAQSchema(faqData);
----
-
-<BaseLayout title="FAQ" description="Frequently asked questions">
-  <script slot="schema" is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-
-  <!-- Page content -->
-</BaseLayout>
-```
-
-**Multiple Schemas:** You can add multiple `<script slot="schema">` tags - each will be rendered in the `<head>`.
-
-See [schema.org](https://schema.org) for available types and properties.
-
-#### Configuring Social Images
-
-Create a default social sharing image at `public/assets/social.jpg` (1200x600px recommended). This will be used for pages without a specific heroImage.
-
-For page-specific social images, pass a heroImage to BaseLayout as shown above.
-
-#### JSON-LD Structured Data
-
-This template automatically generates JSON-LD structured data for SEO:
-
-**LocalBusiness Schema** (on all pages):
-
-- Automatically uses data from `src/data/client.ts`
-- Includes business name, address, phone, email, social media
-- Generated by `src/js/localBusinessSchema.js`
-- Included via Meta component in BaseLayout
-
-**BlogPosting Schema** (on blog posts):
-
-- Automatically generated for blog articles
-- Includes title, author, published date, image
-- Generated by `src/js/blogPostingSchema.js`
-- Included via schema slot in BlogPostLayout
-- Improves search engine rich results
-
-**Customizing Your Schema:**
-
-Edit `src/data/client.ts` to configure your business information. All schema data pulls from this centralized configuration file.
-
-<a name="imagesOptimization"></a>
-
-### Images Optimization
-
-This kit uses Astro's built-in image optimization. **Images must be stored in `src/assets/` and used with `<Picture />` or `<Image />` components** to be optimized.
-
-#### Responsive Images by Default
-
-This template is configured in `astro.config.mjs` with `layout: 'constrained'` as the default. This means:
-
-- `srcset` and `sizes` attributes are automatically generated based on image dimensions
-- Images are responsive without manual configuration
-- `width` and `height` are optional for images in `src/` as they are automatically inferred, but can be used to resize the images.
-
-#### Using the Picture component
-
-```astro
----
-import { Picture } from "astro:assets";
-import heroImage from "@assets/images/hero.jpg";
----
-
-<Picture
-  src={heroImage}
-  alt="Description"
-  width={400}
-  formats={['avif', 'webp']}
-  priority
-  pictureAttributes={{ class: "cs-picture" }}
-/>
-```
-
-#### Image component properties
-
-- `formats` - Output formats (e.g., `['avif', 'webp']`)
-- `priority` - Automatically sets optimal `loading`, `decoding`, and `fetchpriority` for above-the-fold images
-- `width` / `height` - Define the dimensions to use for the image.
-- `layout` - Defaults to `'constrained'` (responsive). Other options: `'fixed'`, `'full-width'`
-
-#### Social Sharing Images
-
-When you pass a `heroImage` to BaseLayout, it's automatically:
-
-- Optimized for social sharing (1200x600)
-- Used in Open Graph tags
-- Preloaded for performance
-
-```astro
----
-import heroImage from "@assets/images/hero.jpg";
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: heroImage, format: "webp" });
----
-
-<BaseLayout
-  title="Projects"
-  description="Our portfolio"
-  heroImage={optimizedImage}
->
-  <!-- content -->
-</BaseLayout>
-```
-
-#### Image Preloading
-
-This template automatically preloads hero images for optimal performance.
-
-**How it works:**
-
-When you pass a `heroImage` to BaseLayout, the Meta component automatically:
-
-1. Generates a preload `<link>` tag in the `<head>`
-2. Sets `fetchpriority="high"` for above-the-fold images
-3. Ensures the hero image loads before other resources
-
-**Example:**
-
-In your page:
-
-```astro
----
-import heroImage from "@assets/images/hero.jpg";
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: heroImage, format: "webp" });
----
-
-<BaseLayout heroImage={optimizedImage}>
-  <Hero />
-</BaseLayout>
-```
-
-In the rendered HTML `<head>`:
-
-```html
-<link rel="preload" as="image" href="/optimized-hero.webp" fetchpriority="high" />
-```
-
-**When to use preloading:**
-
-- Hero/banner images visible immediately on page load
-- Critical brand assets (logos, etc.)
-- Above-the-fold content
-
-**When NOT to preload:**
-
-- Below-the-fold images (use lazy loading instead)
-- Multiple images (preload only 1-2 critical resources per page)
-- Small icons or decorative images
-
-#### Built-in Astro components: `<Image />` and `<Picture />`
-
-This kit demonstrates the use of the built-in `<Picture />` component, [for which you can read the documentation here](https://docs.astro.build/en/guides/images/#picture-). However, not all native HTML `<picture>` elements from CodeStitch blocks have been replaced with Astro's `<Picture />` components. CodeStich users will have to decide which one they want to use:
-
-- CodeStich blocks already have fully-functionning `<picture>` elements that perform very well. However, the developper will have to do a time-consumming job with resizing and reformatting assets.
-- Astro's `<Picture />` components must be manually written to replace stitches. On the other hand, they automatically process and optimize assets, which allows the developper to skip the resizing and reformatting preparation work.
-
-#### Custom Picture component
-
-Astro provides two built-in components that you can use to display and optimize your images.
-
-- The <Picture> component allows you to display responsive images and work with different formats and sizes.
-- The <Image> component will optimize your images and allow you to pass in different formats and quality properties.
-
-If you want to replicate the `<picture>` elements with multiple `srcset` found in many Stitches, you can use our custom `<CSPicture />` component located in `/src/Components/TemplateComponents`.
-
-It uses <a href="https://docs.astro.build/en/recipes/build-custom-img-component/">Astro's `getImage()` function</a> to create a custom image component that displays different source images based on media queries.
-
-> Note: the component will automatically convert your .jpg files to .webp!
-
-```JSX
-
----
-// Import the component and all the images you want to use with it
-import CSPicture from "@components/TemplateComponents/CSPicture.astro";
-import mobileImage from "@assets/images/construction-m.jpg"
-import desktopImage from "@assets/images/cabinets2.jpg"
-import fallbackImage from "@assets/images/cabinets2.jpg"
----
-
-  <CSPicture
-    mobileImgUrl={mobileImage}
-    mobileMediaWidth="600px"
-    desktopImgUrl={desktopImage}
-    desktopMediaWidth="601px"
-    fallbackImgUrl={fallbackImage}
-    alt=""
-  />
-```
-
-It is currently set up to
-
-1. accept 3 images (mobile, desktop and fallback) that can be not only different sizes, crops but also completely different assets, as demnnstrated here.
-2. accept mobile and desktop media width if you want to adjust these sizes on a case by case basis.
-
-You can of course adjust the sizes of attributes baased on your customization's needs directly in the component.
-
-<a name="contentManagement"></a>
-
-### Content Management & Blog
-
-#### Configuring the CMS
+### Configuring Decap CMS
 
 In `public/admin/`, you'll find a `config.yml` file which contains the configuration for the blog. While this project is set up to work with a blog out of the box, you are welcome to make changes using
 <a href="https://decapcms.org/docs/add-to-your-site/#configuration">Decap CMS'</a> documentation.
@@ -1010,7 +852,9 @@ You can access the blog via navigating to the `/admin` path on the deployed site
 
 Everything on the blog should be fairly intuitive, but feel free to experiment with using this panel first. With this kit, you can add _featured_ to the comma-separated list of tags to have them show up as so in the frontend.
 
-#### Styling the Decap preview pane
+<a name="stylingdecappreview"></a>
+
+### Styling the Decap preview pane
 
 This template includes custom styles for the Decap CMS preview pane, so that blog posts in the admin dashboard look similar to the live site.
 
@@ -1032,7 +876,7 @@ This template includes custom styles for the Decap CMS preview pane, so that blo
 - The style sheet must be a CSS file
 - The style sheet does not support nested CSS.
 
-##### Adding local backend
+#### Adding local backend
 
 If you want to be able to access the Decap dashboard in order to make content changes, you need to enable some local backend settings.
 
@@ -1062,7 +906,42 @@ b. update the scripts
 
 Now, when `npm run dev` is run, a proxy server for the CMS is spun up on `localhost:8081`. That can often mean you run into errors if `localhost:8080` is already taken, so look out for that. You can locally access the blog via navigating to the `/admin` path (e.g. `http://localhost:4321/admin`). While running the local dev server, you won't need to login to access the admin dashboard.
 
-#### Astro Content Collections
+<a name="removingDecapCms"></a>
+
+### Removing Decap CMS
+
+If you don't need a CMS for your project, you can easily remove Decap CMS using the included removal script.
+
+#### When to Remove Decap CMS
+
+- Building a static site with no content management needs
+- Want to use local Content Collections without Decap
+- Prefer a different CMS solution
+- Simplifying the project for a specific use case
+
+#### How to Remove
+
+Run the removal script:
+
+```bash
+npm run remove-decap
+```
+
+The script will:
+1. Ask for confirmation before proceeding
+2. Ask if you want to remove blog content and configuration
+   - Choose **yes** to completely remove blog functionality
+   - Choose **no** to keep blog files for local Content Collections (without Decap)
+
+#### Safety & Recovery
+
+- **Files are moved, not deleted** - Everything goes to `scripts/deleted/`
+- **Easy to restore** - Copy files back from `scripts/deleted/` if needed
+- **Commit first** - Always commit changes before running the script
+
+<a name="astroContentCollections"></a>
+
+### Astro content collections
 
 In `/src/content`, you will see a `config.ts` file. This is where you can configure [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/). This step is **not necessary** to run the blog with Decap CMS, but it will supercharge your Astro pages and content. Collections help to
 
@@ -1075,137 +954,84 @@ This template already has Content Collections configured for immediate use of th
 
 Content Collections can also be used on content that is not created via the CMS.
 
-<a name="scriptsEventHandling"></a>
-
-### Scripts & Event Handling
-
-You can add interactivity to your Astro components using standard HTML `<script>` tags. This allows you to send JavaScript to run in the browser and add functionality to your Astro components.
-
-#### Using `<script>` in Astro
-
-This kit uses scripts in two different ways:
-
-1. Imported from `src/`
-
-Astro will build, optimize, and add these scripts to the page for you.
-
-> `async` and `defer` attributes are unnecessary. Indeed, the processed script will be injected into your page's <head> with `type="module"` and module scripts are always deferred automatically.
-
-For example, `nav.js` lives in `src/` and is used in `Baselayout.astro` like so:
-
-`<script src="@js/nav.js"></script>`
-
-2. Scoped to the component
-
-Another way to use scripts in Astro is to use them directly in the component. For example, the `FAQ.astro` component uses a `<script>` tag to toggle the FAQ elements on and off. This script doesn't need to be executed on every page, so it is best scoped to its component.
-
-This being said, this particular script could also well be imported from `src/` as seen above, and it would work too.
-
-#### Using scripts with `<ViewTransitions />` enabled
-
-When you add view transitions to an existing Astro project, some of your scripts may no longer re-run after page navigation like they did with full-page browser refreshes.
-
-The <ViewTransition /> router fires a number of events on the document during navigation. These events provide hooks into the lifecycle of navigation, allowing you to do things like show indicators that a new page is loading, override default behavior, and restore state as navigation is completing.
-
-In this kit, both the nav and FAQ scripts use the `astro:page-load` wrapper. You can use this event to run code on every page navigation, for example to set up event listeners that would otherwise be lost during navigation.
-
-```js
-<script>
-  document.addEventListener('astro:page-load', () => {
-    // This runs on first page load and after every navigation.
-    setupStuff(); // e.g. add event listeners
-  });
-</script>
-```
-
-For an in-depth explanation, please refer <a href="https://docs.astro.build/en/guides/view-transitions/#script-behavior-with-view-transitions">to the documentation.
-
-<a name="sitemapConfiguration"></a>
-
-### Sitemap Configuration
-
-This template includes automatic sitemap generation using <a href="https://docs.astro.build/en/guides/integrations-guide/sitemap/">`@astrojs/sitemap`</a>. The sitemap helps search engines better crawl and index your site.
-
-#### Features
-
-- Automatically generates `sitemap-index.xml` and `sitemap-0.xml`
-- Excludes admin routes from indexing
-- No manual XML creation needed
-
-#### Configuration
-
-The sitemap is pre-configured in `astro.config.mjs`. Here's what's included:
-
-```js
-import sitemap from "@astrojs/sitemap";
-
-export default defineConfig({
-	site: "https://yourwebsite.com", // Replace with your site URL
-	integrations: [
-		sitemap({
-			filter: (page) => !page.includes("/admin"),
-			changefreq: "weekly",
-			priority: 0.7,
-		}),
-	],
-});
-```
-
-> Note: Make sure to replace `https://yourwebsite.com` with your actual site URL in `astro.config.mjs` and `robots.txt`.
-
-Fore more configuration options, read the [full Astro Sitemap documentation](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-
-<a name="deployment"></a>
 
 ## Deployment
 
+### Sitemap Configuration
+
+This kit includes automatic sitemap generation for better SEO and search engine discoverability.
+
+#### How It Works
+
+**Static Pages:** The `@astrojs/sitemap` integration automatically discovers all static pages (home, about, blog, etc.) at build time.
+
+**Product Pages:** A custom sitemap endpoint fetches all product handles from your Shopify store via the Storefront API and generates product URLs.
+
+**Sitemap Index:** Both sitemaps are combined into a sitemap index for easy submission to search engines.
+
+#### Setup
+
+1. **Update your site URL** in `astro.config.mjs`:
+   ```javascript
+   const SITE_URL = "https://www.yourwebsite.com";
+   ```
+
+2. **Optional:** Change the shop route slug:
+   ```javascript
+   const SHOP_SLUG = "shop"; // Change if using different route
+   ```
+
+3. **Build your site:**
+   ```bash
+   npm run build
+   ```
+
+#### Generated Files
+
+- `dist/sitemap-index.xml` - References both sitemaps
+- `dist/sitemap-0.xml` - Static pages
+- `dist/shop-sitemap.xml` - Product pages
+
+#### Submitting to Search Engines
+
+Submit `https://yoursite.com/sitemap-index.xml` to:
+- Google Search Console
+- Bing Webmaster Tools
+- Other search engines
+
+The sitemap updates automatically on each build with current products.
+
+### Choosing a Shopify Plan for Your Client
+
+When handing off the store to your client, they'll need to choose a Shopify plan. Here's what to recommend:
+
+> [!NOTE]
+> Plan features and prices current at the time of writing
+
+**Starter Plan ($5/month)**
+- Basic e-commerce functionality with buy buttons and checkout links
+- Best for: Simple stores with few products, limited budget
+- **Transaction fees:** 5% per transaction (when not using Shopify Payments)
+- **Limitations:** No Collections, no discount codes, no custom domains
+
+**Basic Plan ($39/month)** ⭐ 
+- Full e-commerce platform with all essential features
+- Best for: Most clients with 20+ products who want to grow
+- **Transaction fees:** 1.5% per transaction (when not using Shopify Payments)
+- **Includes:**
+  - **Collections** - Organize products by category for better navigation
+  - **Discount codes** - Run promotions and sales
+  - **Custom domains** - Professional branding with client's own domain
+  - **Unlimited products** - No restrictions on catalog size
+  - **Gift cards** - Sell gift cards to customers
+  - **Advanced reports** - Track sales and customer behavior
+
+**Recommendation:** For most professional e-commerce sites, the Basic Plan is the better choice. The lower transaction fees often offset the higher monthly cost, and clients benefit from essential features like Collections and discount codes that improve the shopping experience.
+
 > [!IMPORTANT]
-> This kit now uses decapbridge.com for its authentication solution. If you still use Netlify Identity, please refer to [the unmaintained Netlify Identity branch](https://github.com/CodeStitchOfficial/Intermediate-Astro-Decap-CMS/tree/deprecated---using-Netlify-Identity)
+> This kit now uses decapbridge.com for its authentication solution. If you still use Netlify Identity, please refer to [the Netlify Identity branch](https://github.com/CodeStitchOfficial/Intermediate-Astro-Decap-CMS/tree/deprecated---using-Netlify-Identity)
 
-### Pre-Deployment Checklist
-
-Before deploying, ensure you've configured:
-
-1. **Site URLs** - Update in:
-
-   - `astro.config.mjs` - `site` property
-   - `src/data/client.ts` - `SITE.url`
-   - `public/robots.txt` - Sitemap URL
-
-2. **Business Information** - Update `src/data/client.ts`:
-
-   - Company name, address, phone
-   - Email and opening hours
-   - Social media links
-
-3. **Favicons** - Replace default favicons in `public/assets/favicons/`
-
-   - Use https://realfavicongenerator.net/
-
-4. **Default Social Image** - Create `public/assets/social.jpg` (1200x600px recommended)
-
-5. **Decap CMS Configuration** - Update `public/admin/config.yml`:
-
-   - Repository name
-   - Site URL
-   - DecapBridge settings
-
-6. **Test JSON-LD and Social Sharing** - Validate before deploying:
-
-**JSON-LD Validation:**
-
-1. Build locally: `npm run build && npm run preview`
-2. View page source and copy the JSON-LD script (inside `<script type="application/ld+json">`)
-3. Validate at https://validator.schema.org/
-4. Test with Google Rich Results: https://search.google.com/test/rich-results
-
-**Social Sharing:**
-
-- Facebook: https://developers.facebook.com/tools/debug/
-- Twitter: https://cards-dev.twitter.com/validator
-- LinkedIn: https://www.linkedin.com/post-inspector/
-
-### Setting Up Decap CMS with DecapBridge
+0. **Before** you deploy, ensure the astro.config.mjs, client.json, robots.txt, \_redirects have been filled out, and that any kit placeholders have been swapped out.
 
 > [!TIP]
 > If you are updating your kit from Netlify Identity to decapbridge.com:
@@ -1215,10 +1041,10 @@ Before deploying, ensure you've configured:
 > 3. Navigate to Project Configuration/Identity and delete the Netlify Identity instance. This will delete your users as well. They will have to be re-created in decapbridge later.
 > 4. In /src/pages/admin.astro, delete the Netlify Identity script
 
-#### On decapbridge.com:
+### On decapbridge.com:
 
-1. Make sure that your repo is on Github and your site is deployed (doesn't have to be Netlify) before moving on to the next step.
-2. Navigate to https://decapbridge.com/ and create an account. It's free.
+1. Make sure that your repo is on Github and your site is deployed (doesn’t have to be Netlify) before moving on to the next step.
+2. Navigate to https://decapbridge.com/ and create an account. It’s free.
 3. Navigate to the dashboard and Create New Site. You see this screen:
 
 ![decapbridge.com dashboard](public/assets/readme-images/decapbridge-dashboard.png)
@@ -1230,15 +1056,15 @@ Fill in the 3 input fields:
   To create a personal access token in GitHub, follow these steps:
 
   1. Log into your Github account.
-  2. Click on your profile picture (top right) (not the repository profile), and click the "Settings" link.
-  3. Scroll down and click the "Developer Settings" link.
-  4. Click the GitHub "Personal access tokens" link and choose `fine-grained tokens`
-  5. Click the "Generate new token" button and provide your password again if required.
-  6. Provide a name for the GitHub personal access token in the "Note" field.
-  7. Set the access token's "expiration" timeout to "No expiration."
-  8. Set the "Repository access" to the desired repository only.
-  9. Set the "Permissions / Repository permissions" to **read-write access** for this repository's **Contents** and **Pull requests. (**This is needed by DecapCMS to read your markdown, and write new content via Pull Requests.)
-  10. Click "Generate token.", double check the permissions and click the Generate Token button
+  2. Click on your profile picture (top right) (not the repository profile), and click the “Settings” link.
+  3. Scroll down and click the “Developer Settings” link.
+  4. Click the GitHub “Personal access tokens” link and choose `fine-grained tokens`
+  5. Click the “Generate new token” button and provide your password again if required.
+  6. Provide a name for the GitHub personal access token in the “Note” field.
+  7. Set the access token’s “expiration” timeout to “No expiration.”
+  8. Set the “Repository access” to the desired repository only.
+  9. Set the “Permissions / Repository permissions” to **read-write access** for this repository's **Contents** and **Pull requests. (**This is needed by DecapCMS to read your markdown, and write new content via Pull Requests.)
+  10. Click “Generate token.”, double check the permissions and click the Generate Token button
   11. **Make sure to copy your GitHub Personal Access Token now as you will not be able to see this again.**
 
       ![The Permissions settings](public/assets/readme-images/github-permissions.png)
@@ -1247,7 +1073,7 @@ Fill in the 3 input fields:
 
 - Decap CMS URL: provide the (deployed) URL of the Decap CMS dashboard. e.g [`https://testing-decapbridge.netlify.app/admin/#/`](https://testing-decapbridge.netlify.app/admin/#/)
 
-#### In your project:
+### On your CS Decap kit:
 
 1. In `/public/admin/config.yml`, edit the `backend` Decap config to paste in the snippet provided by the [DecapBridge.com](http://DecapBridge.com) dashboard. It should look something like this:
 
@@ -1262,11 +1088,11 @@ backend:
 
   # Quickly see who did what (optional)
   commit_messages:
-    create: Create {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    update: Update {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    delete: Delete {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    uploadMedia: Upload "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    deleteMedia: Delete "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
     openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
 # Better Decap + Bridge logo (optional)
@@ -1279,58 +1105,16 @@ site_url: https://testing-decapbridge.netlify.app
 2. Push changes to the repo and test the authentication system. As the admin of the site, your login credentials to access the Decap dashboard are the same as your decapbridge.com credentials.
 3. Invite your client from your decapbridge dashboard. This will create a decapbridge collaborator account for them. From there, they will be able to access their Decap dashboard, reset their password etc.
 
-### Netlify Build Cache Optimization
+<a name="helpfulResources"></a>
 
-This project is optimized for Netlify deployment with build caching enabled via `netlify-plugin-cache`.
+## Helpful Resources
 
-**Important Notes:**
+If you need to brush up on the fundamentals:
 
-- **First deployment** will be slower as it establishes the cache
-- **Subsequent deployments** will be significantly faster
+1. [Astro's Documentation](https://docs.astro.build/en/getting-started/)
+2. [Astro Crash Course in 20 Minutes!](https://www.youtube.com/watch?v=zrPVTf761OI)
+3. [Storefront Web Components Playground](https://webcomponents.shopify.dev/playground?view=editor)
+4. [Decap CMS Documentation](https://decapcms.org/docs/intro/)
 
-**Cache Management:**
-
-If you need to clear the cache (e.g., after major dependency updates or content collection errors):
-
-1. Go to Netlify Dashboard → Site Settings → Build & deploy
-2. Click "Clear cache and retry deploy"
-3. Or add `[skip cache]` to your commit message
-
-**When to clear the cache:**
-
-- After major dependency updates
-- If you encounter "Cannot find module" errors with content collections
-- After restructuring content files or renaming content collections
-
-The cache configuration is already set up in `netlify.toml` at the project root.
-
-<a name="contributing"></a>
-
-## Contributing
-
-If you're interested in helping, you can contribute in several ways:
-
-1. Reporting and Fixing Issues: Feel free to use the issue tracker to report bugs or request features.
-2. Submitting Pull Requests: If you've fixed a bug or added a new feature, submit a pull request with a clear description of your changes.
-3. Providing Feedback: Share your thoughts on the project's current features and suggest improvements.
-
-Check [open issues](https://github.com/CodeStitchOfficial/Intermediate-Astro-Decap-CMS/issues) and submit PRs.
-
-<a name="acknowledgments"></a>
-
-## Acknowledgments
-
-The author would like to acknowledge:
-
-- [Cedar Studios](https://github.com/cedar-studios) - Their [Intermediate-Astro-Kit-LESS](https://github.com/cedar-studios/Intermediate-Astro-Kit-LESS/tree/master) is the base of this template, which aims to improve on a few issues such as a breaking update to Astro v.4 due to outdated `astro-netlify-cms` integration.
-- [CodeStitch](https://codestitch.app/) - Some of their free stitches were used in this template.
-- [Decapbridge.com] - Powers the interactions between Decap and the Github repo. Visit [Decapbridge Discord](<(https://discord.com/channels/1257728522361901219/1257728681380417600)>) and their [open-sources repos](https://github.com/decapbridge) for more information and support.
-
-<a name="conclusion"></a>
-
-## Conclusion
-
-I hope that this kit will prove useful to you. If you have any questions or would like to connect, feel free to reach out on [Twitter](https://twitter.com/BuckyBuck135) or at `buckybuck` on Discord.
 
 Happy coding!
-**_Geoffrey_**

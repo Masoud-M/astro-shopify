@@ -1,0 +1,120 @@
+<section class="sorting-section">
+  <!-- Sort By -->
+  <div class="filter-wrapper">
+    <label for="sortBySelect">Sort by:</label>
+    <select id="sortBySelect" onchange="handleSort()">
+      <option value="TITLE">Name</option>
+      <option value="PRICE">Price</option>
+      <option value="CREATED_AT">Newest</option>
+      <option value="BEST_SELLING">Most Popular</option>
+    </select>
+  </div>
+
+  <!-- Sort Order -->
+  <div class="filter-wrapper">
+    <label for="sortOrderSelect">Order:</label>
+    <select id="sortOrderSelect" onchange="handleSort()">
+      <option value="ASC">Ascending</option>
+      <option value="DESC">Descending</option>
+    </select>
+  </div>
+
+  <!-- Products per Page -->
+  <div class="filter-wrapper">
+    <label for="productCountSelect">Products per page:</label>
+    <select id="productCountSelect" onchange="handleProductCount()">
+      <option value="9">9</option>
+      <option value="18">18</option>
+      <option value="27">27</option>
+      <option value="36">36</option>
+    </select>
+  </div>
+</section>
+
+<script is:inline>
+  function handleSort() {
+    const shopifyList = document.getElementById("list-context");
+    const sortKey = document.getElementById("sortBySelect").value;
+    const order = document.getElementById("sortOrderSelect").value;
+
+    if (!shopifyList) {
+      console.warn("Element with id 'list-context' not found.");
+      return;
+    }
+
+    shopifyList.setAttribute("sort-key", sortKey);
+
+    if (order === "DESC") {
+      shopifyList.setAttribute("reverse-order", "");
+    }
+    if (order === "ASC") {
+      shopifyList.removeAttribute("reverse-order");
+    }
+  }
+
+  function handleProductCount() {
+    const shopifyList = document.getElementById("list-context");
+    const count = document.getElementById("productCountSelect").value;
+
+    if (!shopifyList) {
+      console.warn("Element with id 'list-context' not found.");
+      return;
+    }
+
+    shopifyList.setAttribute("first", count);
+    console.log(`Showing ${count} products per page`);
+  }
+</script>
+
+<style>
+  .sorting-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .sorting-section {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  .filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .filter-wrapper {
+      flex-direction: row;
+    }
+  }
+
+  label {
+    font-size: 16px;
+    color: #333;
+  }
+
+  select {
+    padding: 10px 15px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: white;
+    transition: box-shadow 0.2s ease;
+  }
+
+  select:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  body.dark-mode label {
+    color: var(--bodyTextColorWhite);
+  }
+</style>

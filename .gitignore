@@ -26,3 +26,6 @@ pnpm-debug.log*
 # remove-* script outputs
 scripts/deleted/
 .demo-removed
+
+# Local Netlify folder
+.netlify

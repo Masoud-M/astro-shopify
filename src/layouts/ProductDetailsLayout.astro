@@ -1,0 +1,403 @@
+---
+import ShopifyVariantSelector from "@components/Shopify/ShopifyVariantSelector.astro";
+import BaseLayout from "./BaseLayout.astro";
+
+const { productHandle, description, title } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="wrapper">
+    <div class="product-layout">
+      <div class="product-card">
+        <shopify-context type="product" handle={productHandle}>
+          <template>
+            <div class="product-card__container">
+              <div class="product-card__media">
+                <div class="product-card__main-image">
+                  <shopify-media
+                    layout="constrained"
+                    width="390"
+                    height="490"
+                    query="product.selectedOrFirstAvailableVariant.image"
+                  ></shopify-media>
+                </div>
+
+                <div class="product-card__images">
+                  <shopify-list-context
+                    type="image"
+                    query="product.selectedOrFirstAvailableVariant.product.images"
+                    first="3"
+                  >
+                    <template>
+                      <div class="product-card__image">
+                        <shopify-media
+                          class="product-card__image-small"
+                          width="130"
+                          height="150"
+                          query="image"></shopify-media>
+                      </div>
+                    </template>
+                  </shopify-list-context>
+                </div>
+              </div>
+              <div class="product-card__details">
+                <div class="product-card__info">
+                  <div class="product-card__vendor">
+                    <span class="product-card__vendor-text">
+                      <shopify-data query="product.vendor"></shopify-data>
+                    </span>
+                  </div>
+                  <h1 class="product-card__title">
+                    <shopify-data query="product.title"></shopify-data>
+                  </h1>
+                  <div class="product-card__price">
+                    <shopify-money
+                      query="product.selectedOrFirstAvailableVariant.price"
+                    ></shopify-money>
+                    <shopify-money
+                      class="product-card__compare-price"
+                      query="product.selectedOrFirstAvailableVariant.compareAtPrice"
+                    ></shopify-money>
+                  </div>
+                </div>
+
+                <ShopifyVariantSelector
+                  radioVariant="text"
+                  colorSwatchVariant="square"
+                />
+
+                <div class="product-card__buttons">
+                  <!-- Add behavior to an existing button -->
+                  <button
+                    class="product-card__add-button"
+                    onclick="getElementById('cart').addLine(event).showModal();"
+                    shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale"
+                  >
+                    Add to cart
+                  </button>
+
+                  <!-- Add buy button -->
+                  <button
+                    class="product-card__buy-button"
+                    onclick="document.querySelector('shopify-store').buyNow(event)"
+                    class="product-buy-now__button"
+                    shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale"
+                  >
+                    Buy now
+                  </button>
+                </div>
+
+                <div class="product-card__description">
+                  <span class="product-card__description-text">
+                    <shopify-data query="product.description"></shopify-data>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </template>
+          <!-- Placeholder -->
+          <div class="contents placeholder">
+            <div class="product-card__container">
+              <div class="product-card__media">
+                <div class="product-card__main-image">
+                  <div class="skeleton-box" style="width: 420px; height: 420px">
+                  </div>
+                </div>
+                <div class="product-card__images">
+                  <div class="skeleton-box" style="width: 130px; height: 150px">
+                  </div>
+                  <div class="skeleton-box" style="width: 130px; height: 150px">
+                  </div>
+                  <div class="skeleton-box" style="width: 130px; height: 150px">
+                  </div>
+                </div>
+              </div>
+              <div class="product-card__details">
+                <div class="skeleton-box" style="width: 100px; height: 94.5px">
+                </div>
+                <div class="skeleton-box" style="width: 287.4px; height: 142px">
+                </div>
+                <div
+                  class="skeleton-box"
+                  style="width: 287.4px; height: 53px; border-radius: 0.75rem"
+                >
+                </div>
+              </div>
+            </div>
+          </div>
+        </shopify-context>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .wrapper {
+    padding: 150px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  /** Product card style **/
+  .product-layout {
+    display: flex;
+  }
+  .product-card {
+    width: 100%;
+    max-width: 56rem;
+    min-width: 320px;
+    background-color: var(--bodyTextColorWhite);
+    border-radius: 0.5rem;
+    overflow: auto;
+  }
+  .product-card__container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+    box-sizing: border-box;
+  }
+  @media (min-width: 768px) {
+    .product-card__container {
+      flex-direction: row;
+    }
+  }
+  @media (min-width: 1024px) {
+    .product-card__container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
+  .product-card__media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .product-card__main-image shopify-media img {
+    border-radius: 4px;
+  }
+  .product-card__images {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .product-card__image-small {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .product-card__image-small img:hover {
+    opacity: 0.8;
+  }
+  .product-card__image-small img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  @media (min-width: 1024px) {
+    .product-card__media {
+      aspect-ratio: 4/5;
+      width: 50%;
+    }
+  }
+  .product-card__details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    @media (min-width: 1024px) {
+      width: 50%;
+    }
+  }
+  .product-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .product-card__vendor {
+    display: flex;
+    justify-content: space-between;
+  }
+  .product-card__vendor-text {
+    opacity: 0.5;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+  .product-card__description {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top-color: rgb(229 231 235);
+    opacity: 1;
+    border-top-width: 1px;
+    border-top-style: solid;
+  }
+  .product-card__description-text {
+    font-weight: 400;
+    color: #717171;
+    letter-spacing: 0.02em;
+    font-size: 0.875rem;
+  }
+  .product-card__description-text p {
+    margin: 0;
+  }
+  .product-card__title {
+    color: var(--headerColor);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  .product-card__price {
+    display: flex;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 1.25rem;
+  }
+  .product-card__compare-price {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+  .product-card__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .product-card__buttons button {
+    font-size: 0.875rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+    border: 2px solid #000;
+  }
+  .product-card__buttons button:hover {
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+  }
+  .product-card__buy-button {
+    background-color: #fff;
+    color: #000;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+  }
+  .product-card__buttons button.product-card__buy-button:hover {
+    opacity: 0.5;
+  }
+  .product-card__buy-button:disabled {
+    opacity: 0.5;
+  }
+  .product-card__buy-button[disabled]:hover {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #fff;
+    color: #000;
+  }
+  .product-card__add-button {
+    background-color: #000;
+    color: #fff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+  }
+  .product-card__add-button:disabled {
+    opacity: 0.5;
+  }
+  .product-card__add-button[disabled]:hover {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #000;
+    color: #fff;
+  }
+  /** Variant selector style **/
+  shopify-variant-selector::part(radio) {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+  }
+</style>
+
+<style id="placeholder-css">
+  .skeleton-box {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    background-color: #dddbdd;
+    border-radius: 3px;
+    overflow: hidden;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.5) 60%,
+        rgba(255, 255, 255, 0)
+      );
+      animation: shimmer 5s infinite;
+      content: "";
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  shopify-context,
+  .contents {
+    display: contents;
+  }
+  shopify-context > .placeholder {
+    opacity: 1;
+    display: flex;
+  }
+  shopify-context > .placeholder.contents {
+    display: contents;
+  }
+  shopify-context[shopify-content-loaded] > .placeholder.placeholder {
+    opacity: 0;
+    display: none;
+  }
+  shopify-context:has(> .placeholder) > :not(.placeholder, template) {
+    opacity: 0;
+    display: none;
+    transition:
+      opacity 0.5s ease,
+      display 0.5s ease allow-discrete;
+    transition-delay: 0.1s;
+  }
+  shopify-context:has(> .placeholder)[shopify-content-loaded]
+    > :not(.placeholder, template) {
+    opacity: 1;
+    display: flex;
+  }
+  @starting-style {
+    shopify-context:has(> .placeholder)[shopify-content-loaded]
+      > :not(.placeholder, template) {
+      opacity: 0;
+    }
+  }
+</style>
