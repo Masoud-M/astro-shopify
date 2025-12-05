@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
-import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
 import netlify from "@astrojs/netlify";
 
 const SITE_URL = "https://www.yourwebsite.com"; // REPLACE WITH YOUR SITE URL
@@ -11,9 +11,14 @@ export default defineConfig({
 	integrations: [
 		icon(),
 		sitemap({
-			filter: (page) => !page.includes(`/${SHOP_SLUG}/`) || page === `${SITE_URL}/${SHOP_SLUG}/`,
+			filter: (page) => !page.includes("/admin"),
 			customSitemaps: [`${SITE_URL}/${SHOP_SLUG}-sitemap.xml`],
+			changefreq: "weekly",
+			priority: 0.7,
 		}),
 	],
 	adapter: netlify(),
+	image: {
+		layout: "constrained",
+	},
 });

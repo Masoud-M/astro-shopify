@@ -1,22 +1,24 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA.astro";
-import FAQ from "@components/FAQ.astro";
-
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+// Utils
 import { getImage } from "astro:assets";
-import ShopifyAddToCartBtn from "@components/shopify/ShopifyAddToCartBtn.astro";
-import ShopifyViewProductBtn from "@components/shopify/ShopifyViewProductBtn.astro";
-import ShopifyPagination from "@components/shopify/ShopifyPagination.astro";
-import ShopifyFilterWrapper from "@components/shopify/ShopifyFilterWrapper.astro";
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+
+// Components
+import BaseLayout from "@layouts/BaseLayout.astro";
+import heroImage from "@assets/images/hero/hero.jpg";
+import ShopifyFilterWrapper from "@components/Shopify/ShopifyFilterWrapper.astro";
+import ShopifyViewProductBtn from "@components/Shopify/ShopifyViewProductBtn.astro";
+import ShopifyPagination from "@components/Shopify/ShopifyPagination.astro";
+import FAQ from "@components/FAQ/FAQ.astro";
+import CTASimple from "@components/CTA/CTASimple.astro";
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Banner (for rendering)
+const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
 ---
 
 <BaseLayout
   title="Pixel Perfect Websites"
   description="Meta description for the page"
-  preloadedImage={optimizedImage}
+  heroImage={optimizedHeroImage}
 >
   <section id="collection-1602">
     <div class="cs-container">
@@ -81,7 +83,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
     </div>
   </section>
   <FAQ />
-  <CTA />
+  <CTASimple />
 </BaseLayout>
 
 <script is:inline>

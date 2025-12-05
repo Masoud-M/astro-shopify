@@ -16,9 +16,19 @@ const adminPageDestinationPath = join(destinationDir, "admin.astro");
 const blogContentPath = join("src", "content", "blog");
 const blogLayoutsPath = join("src", "layouts");
 const blogPagesPath = join("src", "pages", "blog");
+const blogComponentsPath = join("src", "components");
 const blogContentDestination = join(destinationDir, "blog");
 const blogLayoutsDestination = join(destinationDir, "layouts");
 const blogPagesDestination = join(destinationDir, "pages-blog");
+const blogComponentsDestination = join(destinationDir, "components");
+
+// Blog-related component folders to remove
+const blogComponents = ["FeaturedPost", "TableOfContents"];
+
+// Blog-related icon files to remove
+const iconsPath = join("src", "icons");
+const blogIcons = ["profile.svg"];
+const iconsDestination = join(destinationDir, "icons-blog");
 
 /**
  * Move blog layout files (Blog*.astro)
@@ -60,6 +70,96 @@ async function moveBlogLayouts() {
 		return movedCount;
 	} catch (error) {
 		console.error(`Error moving blog layouts: ${error.message}`);
+		return 0;
+	}
+}
+
+/**
+ * Move blog component folders (FeaturedPost, TableOfContents, etc.)
+ */
+async function moveBlogComponents() {
+	try {
+		// Create destination directory
+		await fs.mkdir(blogComponentsDestination, { recursive: true });
+
+		let movedCount = 0;
+		for (const componentName of blogComponents) {
+			const sourcePath = join(blogComponentsPath, componentName);
+			const destPath = join(blogComponentsDestination, componentName);
+
+			try {
+				// Check if component folder exists
+				await fs.access(sourcePath);
+
+				// Check if destination already exists and remove it
+				try {
+					await fs.access(destPath);
+					await fs.rm(destPath, { recursive: true, force: true });
+				} catch {
+					// Destination doesn't exist, which is fine
+				}
+
+				// Move the component folder
+				await fs.rename(sourcePath, destPath);
+				console.log(`Moved ${sourcePath} to ${destPath}`);
+				movedCount++;
+			} catch (error) {
+				if (error.code === "ENOENT") {
+					// Component doesn't exist, skip silently
+					continue;
+				}
+				console.error(`Error moving ${sourcePath}: ${error.message}`);
+			}
+		}
+
+		return movedCount;
+	} catch (error) {
+		console.error(`Error moving blog components: ${error.message}`);
+		return 0;
+	}
+}
+
+/**
+ * Move blog-related icon files to deleted folder
+ */
+async function moveBlogIcons() {
+	try {
+		// Create destination directory
+		await fs.mkdir(iconsDestination, { recursive: true });
+
+		let movedCount = 0;
+		for (const icon of blogIcons) {
+			const sourcePath = join(iconsPath, icon);
+			const destPath = join(iconsDestination, icon);
+
+			try {
+				// Check if icon exists
+				await fs.access(sourcePath);
+
+				// Check if destination already exists and remove it
+				try {
+					await fs.access(destPath);
+					await fs.rm(destPath, { force: true });
+				} catch {
+					// Destination doesn't exist, which is fine
+				}
+
+				// Move the icon file
+				await fs.rename(sourcePath, destPath);
+				console.log(`Moved ${sourcePath} to ${destPath}`);
+				movedCount++;
+			} catch (error) {
+				if (error.code === "ENOENT") {
+					// Icon doesn't exist, skip silently
+					continue;
+				}
+				console.error(`Error moving ${sourcePath}: ${error.message}`);
+			}
+		}
+
+		return movedCount;
+	} catch (error) {
+		console.error(`Error moving blog icons: ${error.message}`);
 		return 0;
 	}
 }
@@ -148,10 +248,10 @@ async function cleanupBlogImports() {
 }
 
 /**
- * Delete content.config.ts (no collections left after removing blog)
+ * Update or delete content.config.ts depending on other collections
  */
 async function cleanupContentConfig() {
-	console.log("\nDeleting content.config.ts...");
+	console.log("\nCleaning up content.config.ts...");
 
 	const contentConfigPath = join(process.cwd(), "src", "content.config.ts");
 
@@ -159,14 +259,55 @@ async function cleanupContentConfig() {
 		// Check if file exists
 		await fs.access(contentConfigPath);
 
-		// Delete the file
-		await fs.rm(contentConfigPath, { force: true });
-		console.log("Deleted content.config.ts (no collections remaining)");
+		// Read the file
+		const content = await fs.readFile(contentConfigPath, "utf-8");
+
+		// Check if there are other collections (like projects)
+		const hasOtherCollections = content.match(/collections\s*=\s*\{[^}]*\}/s);
+
+		if (hasOtherCollections) {
+			// Check if blog is the only collection
+			const collectionMatch = content.match(/collections\s*=\s*\{([^}]*)\}/s);
+			if (collectionMatch) {
+				const collectionsContent = collectionMatch[1];
+				// Count collections by looking for collection entries (key: value pattern)
+				const collectionEntries = collectionsContent.match(/\w+\s*:\s*\w+/g) || [];
+
+				if (collectionEntries.length === 1 && content.includes("blog:")) {
+					// Only blog collection exists, delete the entire file
+					await fs.rm(contentConfigPath, { force: true });
+					console.log("Deleted content.config.ts (no other collections remaining)");
+				} else if (collectionEntries.length > 1) {
+					// Multiple collections exist, remove just the blog collection
+					let updatedContent = content;
+
+					// Remove the blog collection definition (const blogsCollection = ...)
+					updatedContent = updatedContent.replace(
+						/const\s+blogsCollection\s*=\s*defineCollection\([^)]*\);?\n*/s,
+						""
+					);
+
+					// Remove blog from collections export
+					updatedContent = updatedContent.replace(/\s*blog\s*:\s*blogsCollection\s*,?\s*/g, "");
+
+					// Clean up any trailing commas in the collections object
+					updatedContent = updatedContent.replace(/,(\s*)\}/g, "$1}");
+
+					// Write the updated file
+					await fs.writeFile(contentConfigPath, updatedContent, "utf-8");
+					console.log("Updated content.config.ts (removed blog collection, kept other collections)");
+				}
+			}
+		} else {
+			// Couldn't parse collections, delete the file to be safe
+			await fs.rm(contentConfigPath, { force: true });
+			console.log("Deleted content.config.ts");
+		}
 	} catch (error) {
 		if (error.code === "ENOENT") {
 			console.log("content.config.ts not found, skipping...");
 		} else {
-			console.error(`Error deleting content.config.ts: ${error.message}`);
+			console.error(`Error cleaning up content.config.ts: ${error.message}`);
 		}
 	}
 }
@@ -227,7 +368,7 @@ async function removeDecapCMS() {
 
 	// Ask about removing blog content
 	const removeBlogContent = await new Promise((resolve) => {
-		rl.question("Do you also want to remove all blog-related content and config files? (choose no if you want to run local Content Collections withut Decap) (y/n): ", (answer) => {
+		rl.question("Do you also want to remove all blog-related content and config files? (choose no if you want to run local Content Collections without Decap) (y/n): ", (answer) => {
 			rl.close();
 			resolve(answer.toLowerCase() === "y");
 		});
@@ -320,6 +461,22 @@ async function removeDecapCMS() {
 				console.log(`Moved ${movedLayoutsCount} blog layout file(s)`);
 			} else {
 				console.log(`No blog layout files found, skipping...`);
+			}
+
+			// Move blog component folders
+			const movedComponentsCount = await moveBlogComponents();
+			if (movedComponentsCount > 0) {
+				console.log(`Moved ${movedComponentsCount} blog component folder(s)`);
+			} else {
+				console.log(`No blog component folders found, skipping...`);
+			}
+
+			// Move blog icon files
+			const movedIconsCount = await moveBlogIcons();
+			if (movedIconsCount > 0) {
+				console.log(`Moved ${movedIconsCount} blog icon file(s)`);
+			} else {
+				console.log(`No blog icon files found, skipping...`);
 			}
 
 			// Move blog pages folder
