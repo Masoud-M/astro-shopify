@@ -99,8 +99,27 @@ const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
     });
   }
 
+  function addTrailingSlashToLinks() {
+    const productLinks = document.querySelectorAll(".cs-link.product-link");
+
+    if (productLinks.length === 0) {
+      return;
+    }
+
+    productLinks.forEach((link) => {
+      let currentHref = link.getAttribute("href");
+
+      if (currentHref && !currentHref.endsWith("/")) {
+        link.setAttribute("href", currentHref + "/");
+      }
+    });
+  }
+
   document.addEventListener("astro:page-load", () => {
     updateOffers();
+    setTimeout(() => {
+      addTrailingSlashToLinks();
+    }, 500);
 
     // Watch for Shopify web components changing
     const observer = new MutationObserver(updateOffers);

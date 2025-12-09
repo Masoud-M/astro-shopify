@@ -31,9 +31,6 @@ export async function getAllProducts() {
     const API_TOKEN = PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
     const API_ENDPOINT = `${DOMAIN}api/2024-07/graphql.json`;
 
-    // --- You can keep these logs for initial Astro build testing ---
-    console.log("Astro Fetch: Final API Endpoint URL ->", API_ENDPOINT);
-
     if (!API_ENDPOINT || !API_TOKEN) {
         console.error("Shopify API tokens are missing. Check your shopify.ts file.");
         return [];
@@ -59,7 +56,6 @@ export async function getAllProducts() {
         const jsonResponse = await response.json();
 
         const totalEdges = jsonResponse?.data?.products?.edges?.length || 0;
-        console.log(`Astro Fetch Success: Total products received: ${totalEdges}`);
 
         // Map and simplify the data structure
         return jsonResponse.data.products.edges.map(edge => ({
