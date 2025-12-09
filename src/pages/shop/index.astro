@@ -10,6 +10,7 @@ import ShopifyViewProductBtn from "@components/Shopify/ShopifyViewProductBtn.ast
 import ShopifyPagination from "@components/Shopify/ShopifyPagination.astro";
 import FAQ from "@components/FAQ/FAQ.astro";
 import CTASimple from "@components/CTA/CTASimple.astro";
+import ShopifyAddToCartBtn from "@components/Shopify/ShopifyAddToCartBtn.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Banner (for rendering)
 const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
@@ -40,7 +41,7 @@ const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
               <a
                 shopify-attr--disabled="!product.availableForSale"
                 class="cs-link product-link"
-                href=""
+                shopify-attr--href="product.handle"
               >
                 <div class="cs-picture">
                   <shopify-media
@@ -73,8 +74,8 @@ const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
                 </div>
               </a>
 
-              <!-- <ShopifyAddToCartBtn /> -->
-              <ShopifyViewProductBtn />
+              <ShopifyAddToCartBtn />
+              <!-- <ShopifyViewProductBtn /> -->
             </article>
           </template>
         </shopify-list-context>
