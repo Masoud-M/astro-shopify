@@ -17,8 +17,10 @@ export default defineConfig({
 			priority: 0.7,
 		}),
 	],
-	adapter: netlify(),
 	image: {
 		layout: "constrained",
 	},
+	build: {
+		format: "directory",
+	}
 });
