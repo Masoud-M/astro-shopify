@@ -1,14 +1,30 @@
 ---
 import ProductDetailsLayout from "@layouts/ProductDetailsLayout.astro";
+import { getAllProducts } from "src/lib/utils";
 
-export const prerender = false;
-const { slug } = Astro.params;
+export async function getStaticPaths() {
+  const products = await getAllProducts();
 
-const productHandle = slug;
+  return products.map((product) => {
+    return {
+      // 'params' tells Astro what URL to build (e.g., /product/best-seller-treats)
+      params: { slug: product.handle },
+
+      // 'props' passes the full product data object to the component below
+      props: { product: product },
+    };
+  });
+}
+const { product } = Astro.props;
+
+if (!product) {
+  // This allows a static 404 page to be generated if the product prop is somehow missing
+  return Astro.redirect("/404");
+}
 ---
 
 <ProductDetailsLayout
-  productHandle={productHandle}
-  title={productHandle}
-  description={productHandle}
+  productHandle={product.handle}
+  title={product.title}
+  description={product.descriptionHtml}
 />
