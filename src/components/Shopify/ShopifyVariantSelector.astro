@@ -18,20 +18,20 @@ const { radioVariant, colorSwatchVariant } =
     border: 0;
     border-radius: 0;
     background-color: inherit;
-    color: #000;
+    color: var(--bodyTextColor);
     font-size: 16px;
-    border-bottom: 0px solid #000;
+    border-bottom: 0px solid var(--secondary);
     transition: border-bottom 100ms ease-in-out;
   }
 
   shopify-variant-selector[data-radio-variant="text"]::part(radio):hover {
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid var(--secondary);
   }
 
   shopify-variant-selector[data-radio-variant="text"]::part(radio-selected) {
-    color: #000;
+    color: var(--secondary);
     font-weight: bold;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid var(--secondary);
   }
 
   shopify-variant-selector[data-color-swatch-variant="square"]::part(
@@ -48,5 +48,83 @@ const { radioVariant, colorSwatchVariant } =
   shopify-variant-selector::part(color-swatch-disabled),
   shopify-variant-selector::part(radio-disabled) {
     cursor: not-allowed;
+  }
+
+  /* Pill Variant */
+  shopify-variant-selector[data-radio-variant="pill"]::part(radio) {
+    font-weight: 500;
+    border: 2px solid var(--bodyTextColor);
+    border-radius: 24px;
+    background-color: transparent;
+    color: var(--bodyTextColor);
+    font-size: 14px;
+    padding: 8px 16px;
+    transition:
+      background-color 100ms ease-in-out,
+      color 100ms ease-in-out,
+      border-color 100ms ease-in-out;
+  }
+
+  shopify-variant-selector[data-radio-variant="pill"]::part(radio):hover {
+    background-color: var(--primary);
+    color: var(--headerColor);
+    border-color: var(--primary);
+  }
+
+  shopify-variant-selector[data-radio-variant="pill"]::part(radio-selected) {
+    background-color: var(--primary);
+    color: var(--headerColor);
+    border-color: var(--primary);
+    font-weight: 700;
+  }
+
+  /* Dark Mode */
+  body.dark-mode shopify-variant-selector::part(label) {
+    color: var(--bodyTextColor);
+    opacity: 0.8;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  body.dark-mode
+    shopify-variant-selector[data-radio-variant="text"]::part(radio) {
+    color: var(--bodyTextColorWhite);
+    border-bottom-color: var(--bodyTextColorWhite);
+    opacity: 0.8;
+  }
+
+  body.dark-mode
+    shopify-variant-selector[data-radio-variant="text"]::part(radio):hover {
+    border-bottom-color: var(--bodyTextColorWhite);
+  }
+
+  body.dark-mode
+    shopify-variant-selector[data-radio-variant="text"]::part(radio-selected) {
+    color: var(--bodyTextColorWhite);
+    opacity: 1;
+  }
+
+  body.dark-mode
+    shopify-variant-selector[data-radio-variant="pill"]::part(radio) {
+    border-color: var(--bodyTextColorWhite);
+    color: var(--bodyTextColorWhite);
+  }
+
+  body.dark-mode
+    shopify-variant-selector[data-radio-variant="pill"]::part(radio):hover {
+    background-color: var(--primary);
+    color: var(--headerColor);
+    border-color: var(--primary);
+  }
+
+  body.dark-mode
+    shopify-variant-selector[data-radio-variant="pill"]::part(radio-selected) {
+    background-color: var(--primary);
+    color: var(--headerColor);
+    border-color: var(--primary);
+  }
+
+  body.dark-mode shopify-variant-selector::part(label) {
+    color: var(--bodyTextColorWhite);
   }
 </style>

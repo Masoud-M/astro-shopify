@@ -63,7 +63,7 @@ const { productHandle, description, title } = Astro.props;
 
                 <ShopifyVariantSelector
                   radioVariant="text"
-                  colorSwatchVariant="square"
+                  colorSwatchVariant="circle"
                 />
 
                 <div class="product-card__buttons">
@@ -131,212 +131,322 @@ const { productHandle, description, title } = Astro.props;
   </section>
 </BaseLayout>
 
-<style>
-  .wrapper {
-    padding: 150px;
-    margin-inline: auto;
-    display: flex;
-    justify-content: center;
+<style lang="less">
+  /*-- -------------------------------- -->
+  <---     Product Details Page      -->
+  <--- -------------------------------- -*/
+
+  @media only screen and (min-width: 0rem) {
+    .wrapper {
+      padding: var(--sectionPadding);
+      margin-inline: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .product-layout {
+      width: 100%;
+      max-width: (1280/16rem);
+      margin: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .product-card {
+      width: 100%;
+      min-width: 320px;
+      background-color: var(--bodyTextColorWhite);
+      border: 1px solid #e8e8e8;
+      border-radius: (4/16rem);
+      overflow: auto;
+    }
+
+    .product-card__container {
+      display: flex;
+      flex-direction: column;
+      padding: (20/16rem);
+      gap: (32/16rem);
+      box-sizing: border-box;
+    }
+
+    .product-card__media {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .product-card__main-image shopify-media img {
+      border-radius: (4/16rem);
+      transition: transform 0.3s ease;
+    }
+
+    .product-card__main-image:hover shopify-media img {
+      transform: scale(1.02);
+    }
+
+    .product-card__images {
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      justify-content: center;
+      /* 8px - 12px */
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+      margin-top: (12/16rem);
+    }
+
+    .product-card__image-small {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .product-card__image-small img {
+      width: 100%;
+      height: auto;
+      border-radius: (4/16rem);
+    }
+
+    .product-card__image-small img:hover {
+      opacity: 0.8;
+    }
+
+    .product-card__details {
+      display: flex;
+      flex-direction: column;
+      gap: (32/16rem);
+      width: 100%;
+    }
+
+    .product-card__info {
+      display: flex;
+      flex-direction: column;
+      gap: (8/16rem);
+    }
+
+    .product-card__vendor {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .product-card__vendor-text {
+      opacity: 0.6;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: (12/16rem);
+      color: var(--bodyTextColor);
+    }
+
+    .product-card__title {
+      color: var(--headerColor);
+      /* 28px - 36px */
+      font-size: clamp(1.75rem, 2vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.2em;
+      margin: 0;
+    }
+
+    .product-card__price {
+      display: flex;
+      gap: (12/16rem);
+      font-weight: 700;
+      /* 20px - 24px */
+      font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+      color: var(--secondary);
+    }
+
+    .product-card__compare-price {
+      text-decoration: line-through;
+      font-weight: 700;
+      font-size: (16/16rem);
+      color: #767676;
+      opacity: 0.8;
+    }
+
+    .product-card__description {
+      display: flex;
+      justify-content: space-between;
+      padding-top: (24/16rem);
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .product-card__description-text {
+      font-weight: 400;
+      color: #767676;
+      letter-spacing: 0.02em;
+      font-size: (14/16rem);
+      line-height: 1.6em;
+    }
+
+    .product-card__description-text p {
+      margin: 0;
+    }
+
+    .product-card__buttons {
+      display: flex;
+      flex-direction: column;
+      /* 12px - 16px */
+      gap: clamp(0.75rem, 1vw, 1rem);
+    }
+
+    .product-card__buttons button {
+      font-size: (14/16rem);
+      font-weight: 700;
+      line-height: 1.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+      border-radius: (4/16rem);
+      padding: (12/16rem) (20/16rem);
+      width: 100%;
+    }
+
+    .product-card__add-button {
+      background-color: var(--primary);
+      color: var(--headerColor);
+      border: 2px solid var(--primary);
+
+      &:hover {
+        background-color: transparent;
+        color: var(--primary);
+      }
+    }
+
+    .product-card__add-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: var(--primary);
+        color: var(--headerColor);
+      }
+    }
+
+    .product-card__buy-button {
+      background-color: transparent;
+      color: var(--bodyTextColor);
+      border: 2px solid var(--primary);
+
+      &:hover {
+        background-color: var(--primary);
+        color: var(--headerColor);
+      }
+    }
+
+    .product-card__buy-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+        color: var(--bodyTextColor);
+      }
+    }
+
+    shopify-variant-selector::part(radio) {
+      padding: (8/16rem) (12/16rem);
+      font-size: (14/16rem);
+    }
   }
 
-  /** Product card style **/
-  .product-layout {
-    display: flex;
-  }
-  .product-card {
-    width: 100%;
-    max-width: 56rem;
-    min-width: 320px;
-    background-color: var(--bodyTextColorWhite);
-    border-radius: 0.5rem;
-    overflow: auto;
-  }
-  .product-card__container {
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    gap: 2rem;
-    box-sizing: border-box;
-  }
-  @media (min-width: 768px) {
+  /* Tablet - 768px */
+  @media only screen and (min-width: 48rem) {
     .product-card__container {
       flex-direction: row;
+      padding: (28/16rem);
+      gap: clamp(2rem, 4vw, 3rem);
     }
-  }
-  @media (min-width: 1024px) {
-    .product-card__container {
-      padding-left: 40px;
-      padding-right: 40px;
+
+    .product-card__media {
+      width: 50%;
     }
-  }
-  .product-card__media {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  .product-card__main-image shopify-media img {
-    border-radius: 4px;
-  }
-  .product-card__images {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .product-card__image-small {
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-  }
-  .product-card__image-small img:hover {
-    opacity: 0.8;
-  }
-  .product-card__image-small img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
+
+    .product-card__details {
+      width: 50%;
+    }
   }
 
-  @media (min-width: 1024px) {
-    .product-card__media {
-      aspect-ratio: 4/5;
-      width: 50%;
+  /* Desktop - 1024px */
+  @media only screen and (min-width: 64rem) {
+    .product-card__container {
+      padding: (40/16rem);
     }
   }
-  .product-card__details {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-    @media (min-width: 1024px) {
-      width: 50%;
+
+  /* Dark Mode */
+  @media only screen and (min-width: 0rem) {
+    body.dark-mode {
+      .product-card {
+        background-color: var(--medium);
+        border-color: var(--accent);
+      }
+
+      .product-card__title,
+      .product-card__vendor-text,
+      .product-card__price {
+        color: var(--bodyTextColorWhite);
+      }
+
+      .product-card__compare-price {
+        color: var(--bodyTextColorWhite);
+        text-decoration: line-through;
+      }
+
+      .product-card__description-text {
+        color: var(--bodyTextColorWhite);
+      }
+
+      .product-card__description {
+        border-top-color: var(--accent);
+      }
+
+      .product-card__buttons button {
+        border-color: var(--primary);
+      }
+
+      .product-card__add-button {
+        background-color: var(--primary);
+        color: var(--headerColor);
+
+        &:hover {
+          background-color: transparent;
+          color: var(--primary);
+        }
+      }
+
+      .product-card__add-button:disabled {
+        &:hover {
+          background-color: var(--primary);
+          color: var(--headerColor);
+        }
+      }
+
+      .product-card__buy-button {
+        color: var(--bodyTextColorWhite);
+
+        &:hover {
+          background-color: var(--primary);
+          color: var(--headerColor);
+        }
+      }
+
+      shopify-variant-selector::part(radio) {
+        color: var(--bodyTextColorWhite);
+      }
     }
-  }
-  .product-card__info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  .product-card__vendor {
-    display: flex;
-    justify-content: space-between;
-  }
-  .product-card__vendor-text {
-    opacity: 0.5;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-  }
-  .product-card__description {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 1.5rem;
-    border-top-color: rgb(229 231 235);
-    opacity: 1;
-    border-top-width: 1px;
-    border-top-style: solid;
-  }
-  .product-card__description-text {
-    font-weight: 400;
-    color: #717171;
-    letter-spacing: 0.02em;
-    font-size: 0.875rem;
-  }
-  .product-card__description-text p {
-    margin: 0;
-  }
-  .product-card__title {
-    color: var(--headerColor);
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin: 0;
-  }
-  .product-card__price {
-    display: flex;
-    gap: 0.5rem;
-    font-weight: 500;
-    font-size: 1.25rem;
-  }
-  .product-card__compare-price {
-    text-decoration: line-through;
-    opacity: 0.5;
-  }
-  .product-card__buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .product-card__buttons button {
-    font-size: 0.875rem;
-    font-weight: 800;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-    border: 2px solid #000;
-  }
-  .product-card__buttons button:hover {
-    background: #fff;
-    color: #000;
-    border: 2px solid #000;
-  }
-  .product-card__buy-button {
-    background-color: #fff;
-    color: #000;
-    border-radius: 0.75rem;
-    padding: 1rem;
-    font-size: 18px;
-    font-weight: 500;
-    width: 100%;
-  }
-  .product-card__buttons button.product-card__buy-button:hover {
-    opacity: 0.5;
-  }
-  .product-card__buy-button:disabled {
-    opacity: 0.5;
-  }
-  .product-card__buy-button[disabled]:hover {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background-color: #fff;
-    color: #000;
-  }
-  .product-card__add-button {
-    background-color: #000;
-    color: #fff;
-    border-radius: 0.75rem;
-    padding: 1rem;
-    font-size: 18px;
-    font-weight: 500;
-    width: 100%;
-  }
-  .product-card__add-button:disabled {
-    opacity: 0.5;
-  }
-  .product-card__add-button[disabled]:hover {
-    cursor: not-allowed;
-    opacity: 0.5;
-    background-color: #000;
-    color: #fff;
-  }
-  /** Variant selector style **/
-  shopify-variant-selector::part(radio) {
-    padding: 0.5rem 0.875rem;
-    font-size: 0.875rem;
   }
 </style>
 
-<style id="placeholder-css">
+<style id="placeholder-css" lang="less">
   .skeleton-box {
     box-sizing: border-box;
     display: block;
     position: relative;
     background-color: #dddbdd;
-    border-radius: 3px;
+    border-radius: (3/16rem);
     overflow: hidden;
 
     &::after {
@@ -357,6 +467,7 @@ const { productHandle, description, title } = Astro.props;
       content: "";
     }
   }
+
   @keyframes shimmer {
     0% {
       transform: translateX(-100%);
@@ -366,21 +477,26 @@ const { productHandle, description, title } = Astro.props;
       transform: translateX(100%);
     }
   }
+
   shopify-context,
   .contents {
     display: contents;
   }
+
   shopify-context > .placeholder {
     opacity: 1;
     display: flex;
   }
+
   shopify-context > .placeholder.contents {
     display: contents;
   }
+
   shopify-context[shopify-content-loaded] > .placeholder.placeholder {
     opacity: 0;
     display: none;
   }
+
   shopify-context:has(> .placeholder) > :not(.placeholder, template) {
     opacity: 0;
     display: none;
@@ -389,11 +505,13 @@ const { productHandle, description, title } = Astro.props;
       display 0.5s ease allow-discrete;
     transition-delay: 0.1s;
   }
+
   shopify-context:has(> .placeholder)[shopify-content-loaded]
     > :not(.placeholder, template) {
     opacity: 1;
     display: flex;
   }
+
   @starting-style {
     shopify-context:has(> .placeholder)[shopify-content-loaded]
       > :not(.placeholder, template) {
